@@ -13,5 +13,25 @@
     <!-- inject:js -->
     <!-- endinject -->
     <!--[/htmlclean-protect]-->
+	<script>
+		window.onload = (event) => {
+			var css = document.createElement('link');
+			css.rel = "stylesheet"
+			css.href = "style.css"
+			document.getElementsByTagName('head')[0].appendChild(css);
+
+			var script = document.createElement('script');
+			script.onload = function () {
+				jsScript.inititail({
+					url: "http://localhost:58096",
+					token: "4EUgtOZj489zBjIpfm+DkrVa1bozQORXNw+l0f3AlLQ8jzqNl67B2MO2pImAXVUA",
+					header: "Header",
+				});
+			};
+			script.src = "script.js";
+			document.getElementsByTagName('head')[0].appendChild(script);
+		}
+		
+		</script>
   </body>
 </html>

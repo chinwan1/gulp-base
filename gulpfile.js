@@ -48,12 +48,11 @@ gulp.task('js', function () {
 gulp.task('copy', ['html', 'less','js']);
 
 gulp.task('inject', ['copy'], function () {
-	console.log("sss");
   var css = gulp.src(paths.tmpCSS);
   var js = gulp.src(paths.tmpJS);
   var compactFile =  gulp.src(paths.tmpIndex)
-    .pipe(inject( css, { relative:true } ))
-    .pipe(inject( js, { relative:true } ))
+    // .pipe(inject( css, { relative:true } ))
+    // .pipe(inject( js, { relative:true } ))
     .pipe(gulp.dest(paths.tmp));
 		browserSync.reload();
 		return compactFile;
