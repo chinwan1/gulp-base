@@ -1,14 +1,14 @@
 var gulp = require('gulp');
 var del = require('del');
 var inject = require('gulp-inject');
-var webserver = require('gulp-webserver');
+var browserSync = require('browser-sync')
 var htmlclean = require('gulp-htmlclean');
 var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var less = require('gulp-less');
 var minifyCSS = require('gulp-minify-css'); 
-
+var projectStart = false;
 var paths = {
 	src: 'src/**/*',
   srcHTML: 'src/**/*.html',
@@ -48,21 +48,27 @@ gulp.task('js', function () {
 gulp.task('copy', ['html', 'less','js']);
 
 gulp.task('inject', ['copy'], function () {
+	console.log("sss");
   var css = gulp.src(paths.tmpCSS);
   var js = gulp.src(paths.tmpJS);
-  return gulp.src(paths.tmpIndex)
+  var compactFile =  gulp.src(paths.tmpIndex)
     .pipe(inject( css, { relative:true } ))
     .pipe(inject( js, { relative:true } ))
     .pipe(gulp.dest(paths.tmp));
+		browserSync.reload();
+		return compactFile;
 });
 
-gulp.task('serve', ['inject'], function () {
-  return gulp.src(paths.tmp)
-    .pipe(webserver({
-      port: 3000,
-			livereload: true
-    }));
-});
+
+gulp.task('serve',['inject'] ,function(){
+	if(!projectStart) {
+		browserSync({
+				server: { baseDir: paths.tmp, },
+				notify:false
+		})
+		projectStart = true;
+	} 
+	});
 
 gulp.task('watch', ['serve'], function () {
 	gulp.watch(paths.src, ['inject']);
