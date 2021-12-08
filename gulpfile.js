@@ -42,7 +42,7 @@ gulp.task('less', function(){
 	
 
 gulp.task('js', function () {
-  return gulp.src(paths.srcJS).pipe(gulp.dest(paths.tmp));
+  return gulp.src(paths.srcJS).pipe(concat('script.js')).pipe(gulp.dest(paths.tmp));
 });
 
 gulp.task('copy', ['html', 'less','js']);
