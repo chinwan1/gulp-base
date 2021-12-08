@@ -218,14 +218,20 @@
 						border: 1px solid #d8d8d8;
 						padding: 12px;
 						border-top: none;
-						display: flex;
-    				justify-content: space-between;
     				padding: 15px;
-						display: flex;
-    				align-items: center;
 						&:nth-child(1) {
-							border-top: 1px solid #d8d8d8;
+              border-top: 1px solid #d8d8d8;
 						}
+            .fd924-purpose-box-header{
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 10px;
+            }
+            .fd924-detail{
+              font-size: 12px;
+              line-height: 1.5;
+            }
 						.fd924-switch {
 							position: relative;
 							display: inline-block;
@@ -284,6 +290,9 @@
 
 						.fd924-purpose-left-box{
 							display: flex;
+              p{
+                margin: 0px;
+              }
 							.fd924-tilte{
 								margin-left: 10px;
 								line-height: 1;
@@ -312,6 +321,7 @@
 					padding:  20px 20px 10px 20px;
 					.fd924-btn{
 						border: none;
+            cursor: pointer;
 						background-color: #68b631;
     				border-color: #68b631;
 						color: #fff;

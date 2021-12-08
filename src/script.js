@@ -17,16 +17,21 @@ class PurpostItem extends HTMLElement {
 	renderHtml() {
 		this.innerHTML = /*html*/`
 				<div class="fd924-purpose-box-item">
-					<div class="fd924-purpose-left-box">
-						<div class="fd924-explad">+</div>
-						<div class="fd924-tilte">${this.state.title}</div>
-					</div>
-					<div class="fd924-purpose-right-box">
-						<label class="fd924-switch">
+					<div class="fd924-purpose-box-header">
+						<div class="fd924-purpose-left-box">
+							<div class="fd924-explad">+</div>
+							<p class="fd924-tilte">${this.state.title}</p>
+							</div>
+							<div class="fd924-purpose-right-box">
+							<label class="fd924-switch">
 							<input type="checkbox" ${this.state.hasAccept ? "checked": ""} >	
 							<span class="fd924-slider round"></span>
-						</label>
+							</label>
+							</div>
 					</div>
+					<span class="fd924-detail">
+						These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.
+					</span>
 				</div>
 		`
 	}
