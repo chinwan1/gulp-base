@@ -1,8 +1,33 @@
-const iconCookieCosent = `fd924-icon-cookie-cookie`;
-const cookieConsent = `fd924-cookie-cosent`;
-const purpostBox = `fd924-purpost-box`;
-const purpostItem = `fd924-purpost-item`;
 
+var jsScript = {
+	inititail: (options) => {
+		const components = [
+			{ tag: purpostBox, value: PurpostBox},
+			{ tag: purpostItem, value: PurpostItem},
+			{ tag: cookieConsent, value: CookieCosent},
+			{ tag: iconCookieCosent, value: IconCookieCosent},
+		];
+		for (item of components){
+			if (!customElements.get(item.tag)) {
+				customElements.define(item.tag, item.value);
+			}
+		}
+		// if (!customElements.get(purpostItem)) {
+		// 	customElements.define(purpostItem, PurpostItem);
+	  // }
+		// if (!customElements.get(cookieConsent)) {
+		// 	customElements.define(cookieConsent, CookieCosent);
+	  // }
+		// if(!customElements.get(iconCookieCosent)) {
+		// 	customElements.define(iconCookieCosent, IconCookieCosent);
+		// }
+
+		let element = document.createElement(iconCookieCosent);
+		document.getElementsByTagName('body')[0].append(element)
+
+	}
+};
+const purpostItem = `fd924-purpost-item`;
 class PurpostItem extends HTMLElement {
 	state = {
 		title: "",
@@ -90,7 +115,7 @@ class PurpostItem extends HTMLElement {
 	}
 }
 
-
+const purpostBox = `fd924-purpost-box`;
 class PurpostBox extends HTMLElement {
 	state = {
 		title: "",
@@ -117,10 +142,7 @@ class PurpostBox extends HTMLElement {
 }
 
 
-
-
-
-
+const cookieConsent = `fd924-cookie-cosent`;
 class CookieCosent extends HTMLElement {
 		state = {
 			hasOpen: true,
@@ -191,8 +213,7 @@ class CookieCosent extends HTMLElement {
 		
 	}
 }
-
-
+const iconCookieCosent = `fd924-icon-cookie-cookie`;
 class IconCookieCosent extends HTMLElement {
 		connectedCallback() {
 		this.renderHtml();
@@ -213,33 +234,3 @@ class IconCookieCosent extends HTMLElement {
 		});
 	}
 }
-
-
-
-
-
-
-
-var jsScript = {
-
-
-	inititail: (options) => {
-
-		if (!customElements.get(purpostBox)) {
-			customElements.define(purpostBox, PurpostBox);
-	  }
-		if (!customElements.get(purpostItem)) {
-			customElements.define(purpostItem, PurpostItem);
-	  }
-		if (!customElements.get(cookieConsent)) {
-			customElements.define(cookieConsent, CookieCosent);
-	  }
-		if(!customElements.get(iconCookieCosent)) {
-			customElements.define(iconCookieCosent, IconCookieCosent);
-		}
-
-		let element = document.createElement(iconCookieCosent);
-		document.getElementsByTagName('body')[0].append(element)
-
-	}
-};
