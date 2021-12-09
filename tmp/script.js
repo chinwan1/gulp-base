@@ -20,7 +20,7 @@ class PurpostItem extends HTMLElement {
 					<div class="fd924-purpose-box-header">
 						<div class="fd924-purpose-left-box">
 							<div class="fd924-explad">+</div>
-							<p class="fd924-tilte">${this.state.title}</p>
+							<p class="fd924-tilte fd924-text-title-card">${this.state.title}</p>
 							</div>
 							<div class="fd924-purpose-right-box">
 							<label class="fd924-switch">
@@ -29,9 +29,9 @@ class PurpostItem extends HTMLElement {
 							</label>
 							</div>
 					</div>
-					<span class="fd924-detail">
+					<div class="fd924-detail fd924-text-detail-14 has-close-detail">
 						These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.
-					</span>
+					</div>
 				</div>
 		`
 	}
@@ -60,10 +60,24 @@ class PurpostItem extends HTMLElement {
 		input.checked = true;
 		this.state.hasAccept = true;
 	}
+	onToggleExpand() {
+		this.state.hasExpland = !this.state.hasExpland;
+		const domItem = this.querySelector(".fd924-detail");
+		if(this.state.hasExpland) {
+			domItem.classList.add("has-open-deatail");
+			domItem.classList.remove("has-close-detail");
+		} else {
+			domItem.classList.remove("has-open-deatail");
+			domItem.classList.add("has-close-detail");
+		}
+	}
 
 	registerEvent() {
 		this.querySelector("input").addEventListener('click', (event) => { this.state.hasAccept = event.target.checked; })
-		this.querySelector(".fd924-explad").addEventListener('click', (event) =>{ console.log(this.state) })
+		this.querySelector(".fd924-explad").addEventListener('click', this.onToggleExpand.bind(this))
+		this.querySelector(".fd924-purpose-box-item").addEventListener('click', () => {
+			console.log("ssss");
+		})
 		document.addEventListener("onEventRejectAll",this.onRejectAll.bind(this));
 		document.addEventListener("onEventConfirmAll", this.onConfirmAll.bind(this));
 
@@ -82,19 +96,18 @@ class PurpostBox extends HTMLElement {
 	renderHtml() {
 		this.innerHTML = /*html*/`
 		<div class="fd924-purpost-box">
-			<div class="fd924-purpose-box-title">
-				<p>${this.state.title}</p>
+			<div class="fd924-purpose-box-title ">
+				<p class="fd924-text-privacy-text">${this.state.title}</p>
 			</div>
 			<div class="fd924-purpose-box-list">
 				<fd924-purpost-item data-title='test' data-has-accept=false></fd924-purpost-item>
-				<fd924-purpost-item data-title='op' data-has-accept=true></fd924-purpost-item>
+				<fd924-purpost-item data-title='op' data-has-accept=false></fd924-purpost-item>
 			</div>
 		</div>
 		`
 	}
 	initValue(input) {
-		this.state.title = "Manage Consent Preferences"
-	}
+		this.state.title = "Who you talk to and what you share should be up to you. We’re dedicated to making sure Messenger is a safe, private, and secure place for you to connect with the people who matter. To do this, we’ve built tools that allow you to stay in control, secure your account, and stay safe on the platform."; }
 }
 
 
@@ -116,7 +129,7 @@ class CookieCosent extends HTMLElement {
 			<div class="fd924-model-cookie  modal">
 				<div class="fd924-model-content ">
 					<div class="fd924-model-header">
-						<div class="fd924-model-logo">Logo</div>
+						<p class="fd924-text-title-header">Manage Consent Preferences</p>
 						<div class="fd924-model-icon-x">
 							<button type="button" class="btn-close" aria-label="Close"></button>
 						</div>
@@ -126,8 +139,12 @@ class CookieCosent extends HTMLElement {
 					</div>
 						<div class="fd924-model-footer">
 							<div class="fd924-footer-btn">
-								<button class="fd924-btn fd924-btn-left">Reject All</button>
-								<button class="fd924-btn fd924-btn-right">Confirm My Choices</button>
+								<button class="fd924-btn fd924-btn-left">
+									Reject All
+								</button>
+								<button class="fd924-btn fd924-btn-right">
+									Confirm My Choices
+								</button>
 							</div>
 							<div class="fd924-box-powered-by">
 								<a>
@@ -178,18 +195,19 @@ class IconCookieCosent extends HTMLElement {
 	renderHtml() {
 		this.innerHTML = /*html*/`
 		<a class="fd924-icon-cookie-cookie" href="#">
-			<div class="fd924-box-icon-consent" >Icon</div>
+			<div class="fd924-box-icon-consent"  >Icon</div>
 		</a>`
 	}
 
 	registerEvent() {
-		this.querySelector(`.fd924-box-icon-consent`).addEventListener('click',(e) => {
-			e.preventDefault()
+		// this.querySelector(`.fd924-box-icon-consent`).addEventListener('click',(e) => {
+			// e.preventDefault()
 			let element = document.createElement(cookieConsent);
 			document.getElementsByTagName('body')[0].append(element)
-		});
+		// });
 	}
 }
+
 
 
 
