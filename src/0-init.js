@@ -7,7 +7,7 @@ var jsScript = {
 			{ tag: cookieConsent, value: CookieCosent},
 			{ tag: iconCookieCosent, value: IconCookieCosent},
 		];
-		for (item of components){
+		for (const item of components){
 			if (!customElements.get(item.tag)) {
 				customElements.define(item.tag, item.value);
 			}

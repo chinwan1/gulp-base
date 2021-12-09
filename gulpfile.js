@@ -1,12 +1,13 @@
 var gulp = require('gulp');
 var del = require('del');
+const babel = require('gulp-babel');
 var inject = require('gulp-inject');
 var browserSync = require('browser-sync')
 var htmlclean = require('gulp-htmlclean');
 var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
 var less = require('gulp-less');
+var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css'); 
 var projectStart = false;
 var paths = {
@@ -42,7 +43,10 @@ gulp.task('less', function(){
 	
 
 gulp.task('js', function () {
-  return gulp.src(paths.srcJS).pipe(concat('script.js')).pipe(gulp.dest(paths.tmp));
+  console.log(uglify())
+  return gulp.src(paths.srcJS)
+  .pipe(concat('script.js'))
+  .pipe(gulp.dest(paths.tmp));
 });
 
 gulp.task('copy', ['html', 'less','js']);
@@ -97,6 +101,7 @@ gulp.task('less:dist', function () {
 gulp.task('js:dist', function () {
   return gulp.src(paths.srcJS)
     .pipe(concat('script.min.js'))
+    .pipe(babel({ presets: ['@babel/env'] }))
     .pipe(uglify())
     .pipe(gulp.dest(paths.dist));
 });
