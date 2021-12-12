@@ -19,18 +19,90 @@
 
 }
 
-.fd924-icon-cookie-cookie {
-  .fd924-box-icon-consent {
-    width: 50px;
-    height: 50px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 100%;
-    color: white;
+
+
+
+
+.fd924-footer-privacy{
+  background: rgba(234, 237, 237, 0.5);
+  display: block;
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  z-index: 1000;
+  height: 80px;
+  left: 0px;
+  font-size: 15px;
+  .fd924-left-box{
+    padding: 0 40px 0 15px;
+    height: 65px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    position: fixed;
-    bottom: 10px;
+    a{
+      color: #000000;
+      text-decoration: none; 
+    }
+  }
+  .fd924-right-box{
+    position: absolute; 
+    right: 20px; 
+    top: 10px; 
+    display: flex;
+    align-items: center;
+    width: 150px;
+    justify-content: space-between;
+    a{
+      text-decoration: none; 
+    }
+    .fd924-footer-btnconfirm{
+      display: block;
+      width: 70px;
+      padding: 13px;
+      background: rgb(0, 0, 0);
+      text-align: center;
+      border-radius: 20px;
+      color: white;
+      font-weight: bold;
+       cursor: pointer;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .fd924-footer-privacy{
+      height: 120px;
+      .fd924-left-box{
+        height: auto;
+        padding: 10px 0 10px 20px;
+      }
+     .fd924-right-box{
+        padding-bottom: 10px;
+        position: relative;
+        top: auto;
+        left: auto;
+        margin: auto;
+      }
+    }
+  }
+.fd924-icon-cookie {
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 100%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 10px;
+  text-decoration: none;
+  &.fd924-icon-cookie-open{
+    opacity: 1;
+    transition: opacity 2s;
+  }
+    &.fd924-icon-cookie-close{
+    opacity: 0;
+    -webkit-transition: opacity 2s
   }
 }
 
@@ -41,6 +113,7 @@
   top: 0;
   bottom: 0;
   left: 0;
+  z-index: 99999;
   .btn-close {
     box-sizing: content-box;
     width: 1em;
