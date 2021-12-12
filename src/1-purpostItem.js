@@ -30,8 +30,11 @@ class PurpostItem extends HTMLElement {
 						These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.
 					</div>
 				</div>
+
 		`
 	}
+
+
 
 	initValue(input) {
 		if(this.attributes["data-title"]) {

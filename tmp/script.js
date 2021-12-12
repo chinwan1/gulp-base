@@ -1,1 +1,229 @@
-"use strict";function _typeof(t){"@babel/helpers - typeof";return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function _classCallCheck(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function _defineProperties(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}function _createClass(t,e,n){return e&&_defineProperties(t.prototype,e),n&&_defineProperties(t,n),t}function _inherits(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&_setPrototypeOf(t,e)}function _createSuper(t){var e=_isNativeReflectConstruct();return function(){var n,o=_getPrototypeOf(t);if(e){var i=_getPrototypeOf(this).constructor;n=Reflect.construct(o,arguments,i)}else n=o.apply(this,arguments);return _possibleConstructorReturn(this,n)}}function _possibleConstructorReturn(t,e){if(e&&("object"===_typeof(e)||"function"==typeof e))return e;if(void 0!==e)throw new TypeError("Derived constructors may only return object or undefined");return _assertThisInitialized(t)}function _assertThisInitialized(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}function _wrapNativeSuper(t){var e="function"==typeof Map?new Map:void 0;return(_wrapNativeSuper=function(t){function n(){return _construct(t,arguments,_getPrototypeOf(this).constructor)}if(null===t||!_isNativeFunction(t))return t;if("function"!=typeof t)throw new TypeError("Super expression must either be null or a function");if(void 0!==e){if(e.has(t))return e.get(t);e.set(t,n)}return n.prototype=Object.create(t.prototype,{constructor:{value:n,enumerable:!1,writable:!0,configurable:!0}}),_setPrototypeOf(n,t)})(t)}function _construct(t,e,n){return _construct=_isNativeReflectConstruct()?Reflect.construct:function(t,e,n){var o=[null];o.push.apply(o,e);var i=Function.bind.apply(t,o),s=new i;return n&&_setPrototypeOf(s,n.prototype),s},_construct.apply(null,arguments)}function _isNativeReflectConstruct(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){})),!0}catch(t){return!1}}function _isNativeFunction(t){return-1!==Function.toString.call(t).indexOf("[native code]")}function _setPrototypeOf(t,e){return(_setPrototypeOf=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function _getPrototypeOf(t){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}function _defineProperty(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var jsScript={inititail:function(t){for(var e=[{tag:purpostBox,value:PurpostBox},{tag:purpostItem,value:PurpostItem},{tag:cookieConsent,value:CookieCosent},{tag:iconCookieCosent,value:IconCookieCosent}],n=0,o=e;n<o.length;n++){var i=o[n];customElements.get(i.tag)||customElements.define(i.tag,i.value)}var s=document.createElement(iconCookieCosent);document.getElementsByTagName("body")[0].append(s)}},purpostItem="fd924-purpost-item",PurpostItem=function(t){function e(){var t;_classCallCheck(this,e);for(var o=arguments.length,i=new Array(o),s=0;s<o;s++)i[s]=arguments[s];return t=n.call.apply(n,[this].concat(i)),_defineProperty(_assertThisInitialized(t),"state",{title:"",hasExpland:!1,hasAccept:!1}),t}_inherits(e,t);var n=_createSuper(e);return _createClass(e,[{key:"connectedCallback",value:function(t){this.initValue(),this.renderHtml(),this.registerEvent()}},{key:"renderHtml",value:function(){this.innerHTML='\n\t\t\t\t<div class="fd924-purpose-box-item">\n\t\t\t\t\t<div class="fd924-purpose-box-header">\n\t\t\t\t\t\t<div class="fd924-area-explad"></div>\n\t\t\t\t\t\t<div class="fd924-purpose-left-box">\n            <div class="fd924-pupose-expand"><span></span><span></span></div>\n\t\t\t\t\t\t\t<p class="fd924-tilte fd924-text-title-card">'.concat(this.state.title,'</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class="fd924-purpose-right-box">\n\t\t\t\t\t\t\t<label class="fd924-switch">\n\t\t\t\t\t\t\t<input type="checkbox" ').concat(this.state.hasAccept?"checked":"",' >\t\n\t\t\t\t\t\t\t<span class="fd924-slider round"></span>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="fd924-detail fd924-text-detail has-close-detail">\n\t\t\t\t\t\tThese cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t')}},{key:"initValue",value:function(t){this.attributes["data-title"]&&(this.state.title=this.attributes["data-title"].value),this.attributes["data-has-expland"]&&(this.state.hasExpland=this.attributes["data-has-expland"].value||!1),this.attributes[["data-has-accept"]]?this.state.hasAccept="true"===this.attributes["data-has-accept"].value:this.state.hasAccept=this.attributes["data-has-accept"].value||!1}},{key:"onRejectAll",value:function(){this.querySelector("input").checked=!1,this.state.hasAccept=!1}},{key:"onConfirmAll",value:function(){this.querySelector("input").checked=!0,this.state.hasAccept=!0}},{key:"onToggleExpand",value:function(){this.state.hasExpland=!this.state.hasExpland;var t=this.querySelector(".fd924-detail"),e=this.querySelector(".fd924-pupose-expand");this.state.hasExpland?(t.style["margin-top"]="15px",t.classList.add("has-open-deatail"),t.classList.remove("has-close-detail"),e.classList.add("subtract")):(t.classList.remove("has-open-deatail"),t.classList.add("has-close-detail"),e.classList.remove("subtract"),setTimeout(function(){t.style["margin-top"]="0"},200))}},{key:"registerEvent",value:function(){var t=this;this.querySelector("input").addEventListener("click",function(e){t.state.hasAccept=e.target.checked}),this.querySelector(".fd924-area-explad").addEventListener("click",this.onToggleExpand.bind(this)),document.addEventListener("onEventRejectAll",this.onRejectAll.bind(this)),document.addEventListener("onEventConfirmAll",this.onConfirmAll.bind(this))}}]),e}(_wrapNativeSuper(HTMLElement)),purpostBox="fd924-purpost-box",PurpostBox=function(t){function e(){var t;_classCallCheck(this,e);for(var o=arguments.length,i=new Array(o),s=0;s<o;s++)i[s]=arguments[s];return t=n.call.apply(n,[this].concat(i)),_defineProperty(_assertThisInitialized(t),"state",{title:""}),t}_inherits(e,t);var n=_createSuper(e);return _createClass(e,[{key:"connectedCallback",value:function(){this.initValue(),this.renderHtml()}},{key:"renderHtml",value:function(){this.innerHTML='\n\t\t<div class="fd924-purpost-box">\n\t\t\t<div class="fd924-purpose-box-title ">\n\t\t\t\t<p class="fd924-text-privacy-text">'.concat(this.state.title,"</p>\n\t\t\t</div>\n\t\t\t<div class=\"fd924-purpose-box-list\">\n\t\t\t\t<fd924-purpost-item data-title='test' data-has-accept=false></fd924-purpost-item>\n\t\t\t\t<fd924-purpost-item data-title='op' data-has-accept=false></fd924-purpost-item>\n\t\t\t</div>\n\t\t</div>\n\t\t")}},{key:"initValue",value:function(t){this.state.title="Who you talk to and what you share should be up to you. We’re dedicated to making sure Messenger is a safe, private, and secure place for you to connect with the people who matter. To do this, we’ve built tools that allow you to stay in control, secure your account, and stay safe on the platform."}}]),e}(_wrapNativeSuper(HTMLElement)),cookieConsent="fd924-cookie-cosent",CookieCosent=function(t){function e(){var t;_classCallCheck(this,e);for(var o=arguments.length,i=new Array(o),s=0;s<o;s++)i[s]=arguments[s];return t=n.call.apply(n,[this].concat(i)),_defineProperty(_assertThisInitialized(t),"state",{hasOpen:!0}),t}_inherits(e,t);var n=_createSuper(e);return _createClass(e,[{key:"connectedCallback",value:function(){this.renderHtml(),this.registerEvent()}},{key:"renderHtml",value:function(){this.innerHTML='\n\t\t<div class="fd924-cookie-cosent ">\n\t\t\t<div class="fd924-model-cookie  modal">\n\t\t\t\t<div class="fd924-model-content ">\n\t\t\t\t\t<div class="fd924-model-header">\n\t\t\t\t\t\t<p class="fd924-text-title-header">Manage Consent Preferences</p>\n\t\t\t\t\t\t<div class="fd924-model-icon-x">\n\t\t\t\t\t\t\t<button type="button" class="btn-close" aria-label="Close"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="fd924-model-body" >\n\t\t\t\t\t\t<fd924-purpost-box ></fd924-purpost-box>\n\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class="fd924-model-footer">\n\t\t\t\t\t\t\t<div class="fd924-footer-btn">\n\t\t\t\t\t\t\t\t<button class="fd924-btn fd924-btn-left">\n\t\t\t\t\t\t\t\t\tReject All\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t<button class="fd924-btn fd924-btn-right">\n\t\t\t\t\t\t\t\t\tConfirm My Choices\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class="fd924-box-powered-by">\n\t\t\t\t\t\t\t\t<a href="https://www.google.co.th/" >\t\n\t\t\t\t\t\t\t\t\t<span class="fd924-powerd-by">Powered by</span> <span class="fd924-powerd-link">Test<span>\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class="fd924-bg-overly modal-background"></div>\n\t\t</div>',this.querySelector(".fd924-cookie-cosent").classList.add("fd924-anime")}},{key:"onToggleModal",value:function(){var t=this;this.state.hasOpen=!this.state.hasOpen,this.state.hasOpen||(this.querySelector(".fd924-cookie-cosent").classList.add("out"),setTimeout(function(){t.remove()},500))}},{key:"onHandeRejactAll",value:function(){var t=new CustomEvent("onEventRejectAll",{bubbles:!0});document.dispatchEvent(t)}},{key:"onHandeConfirmAll",value:function(){var t=new CustomEvent("onEventConfirmAll",{bubbles:!0});document.dispatchEvent(t)}},{key:"registerEvent",value:function(){this.querySelector(".fd924-model-icon-x").addEventListener("click",this.onToggleModal.bind(this)),this.querySelector(".fd924-bg-overly").addEventListener("click",this.onToggleModal.bind(this)),this.querySelector(".fd924-btn-left").addEventListener("click",this.onHandeRejactAll.bind(this)),this.querySelector(".fd924-btn-right").addEventListener("click",this.onHandeConfirmAll.bind(this))}}]),e}(_wrapNativeSuper(HTMLElement)),iconCookieCosent="fd924-icon-cookie-cookie",IconCookieCosent=function(t){function e(){return _classCallCheck(this,e),n.apply(this,arguments)}_inherits(e,t);var n=_createSuper(e);return _createClass(e,[{key:"connectedCallback",value:function(){this.renderHtml(),this.registerEvent()}},{key:"renderHtml",value:function(){this.innerHTML='\n\t\t<a class="fd924-icon-cookie-cookie" href="#">\n\t\t\t<div class="fd924-box-icon-consent"  >Icon</div>\n\t\t</a>'}},{key:"registerEvent",value:function(){this.querySelector(".fd924-box-icon-consent").addEventListener("click",function(t){t.preventDefault();var e=document.createElement(cookieConsent);document.getElementsByTagName("body")[0].append(e)})}}]),e}(_wrapNativeSuper(HTMLElement));
+
+var jsScript = {
+	inititail: (options) => {
+		const components = [
+			{ tag: purpostBox, value: PurpostBox},
+			{ tag: purpostItem, value: PurpostItem},
+			{ tag: cookieConsent, value: CookieCosent},
+			{ tag: iconCookieCosent, value: IconCookieCosent},
+		];
+		for (const item of components){
+			if (!customElements.get(item.tag)) {
+				customElements.define(item.tag, item.value);
+			}
+		}
+		let element = document.createElement(iconCookieCosent);
+		document.getElementsByTagName('body')[0].append(element)
+
+	}
+};
+const purpostItem = `fd924-purpost-item`;
+class PurpostItem extends HTMLElement {
+	state = {
+		title: "",
+		hasExpland: false,
+		hasAccept: false,
+	}
+	connectedCallback(options) {
+		this.initValue()
+		this.renderHtml();
+		this.registerEvent();
+	}
+	renderHtml() {
+		this.innerHTML = /*html*/`
+				<div class="fd924-purpose-box-item">
+					<div class="fd924-purpose-box-header">
+						<div class="fd924-area-explad"></div>
+						<div class="fd924-purpose-left-box">
+            <div class="fd924-pupose-expand"><span></span><span></span></div>
+							<p class="fd924-tilte fd924-text-title-card">${this.state.title}</p>
+							</div>
+							<div class="fd924-purpose-right-box">
+							<label class="fd924-switch">
+							<input type="checkbox" ${this.state.hasAccept ? "checked": ""} >	
+							<span class="fd924-slider round"></span>
+							</label>
+							</div>
+					</div>
+					<div class="fd924-detail fd924-text-detail has-close-detail">
+						These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.
+					</div>
+				</div>
+
+		`
+	}
+
+
+
+	initValue(input) {
+		if(this.attributes["data-title"]) {
+			this.state.title = this.attributes["data-title"].value;
+		}
+		if(this.attributes["data-has-expland"]) {
+			this.state.hasExpland = this.attributes["data-has-expland"].value || false;
+		}
+		if(this.attributes[["data-has-accept"]]) {
+			this.state.hasAccept = (this.attributes["data-has-accept"].value) === 'true' ? true: false;
+		} else {
+			this.state.hasAccept = this.attributes["data-has-accept"].value || false;
+		}
+	}
+
+	onRejectAll() {
+		const input = this.querySelector("input")
+		input.checked = false;
+		this.state.hasAccept = false;
+	}
+	onConfirmAll() {
+		const input = this.querySelector("input")
+		input.checked = true;
+		this.state.hasAccept = true;
+	}
+	onToggleExpand() {
+		this.state.hasExpland = !this.state.hasExpland;
+		const domItem = this.querySelector(".fd924-detail");
+		const domExpland = this.querySelector(".fd924-pupose-expand");
+		if(this.state.hasExpland) {
+			domItem.style["margin-top"] = "15px";
+			domItem.classList.add("has-open-deatail");
+			domItem.classList.remove("has-close-detail");
+			domExpland.classList.add("subtract");
+		} else {
+			domItem.classList.remove("has-open-deatail");
+			domItem.classList.add("has-close-detail");
+			domExpland.classList.remove("subtract");
+			setTimeout(() => {
+				domItem.style["margin-top"] = "0";
+			}, 200);
+		}
+
+	}
+
+	registerEvent() {
+		this.querySelector("input").addEventListener('click', (event) => { this.state.hasAccept = event.target.checked; })
+		this.querySelector(".fd924-area-explad").addEventListener('click', this.onToggleExpand.bind(this))
+		document.addEventListener("onEventRejectAll",this.onRejectAll.bind(this));
+		document.addEventListener("onEventConfirmAll", this.onConfirmAll.bind(this));
+
+	}
+}
+
+const purpostBox = `fd924-purpost-box`;
+class PurpostBox extends HTMLElement {
+	state = {
+		title: "",
+	}
+	connectedCallback() {
+		this.initValue()
+		this.renderHtml();
+	}
+	renderHtml() {
+		this.innerHTML = /*html*/`
+		<div class="fd924-purpost-box">
+			<div class="fd924-purpose-box-title ">
+				<p class="fd924-text-privacy-text">${this.state.title}</p>
+			</div>
+			<div class="fd924-purpose-box-list">
+				<fd924-purpost-item data-title='test' data-has-accept=false></fd924-purpost-item>
+				<fd924-purpost-item data-title='op' data-has-accept=false></fd924-purpost-item>
+			</div>
+		</div>
+		`
+	}
+	initValue(input) {
+		this.state.title = "Who you talk to and what you share should be up to you. We’re dedicated to making sure Messenger is a safe, private, and secure place for you to connect with the people who matter. To do this, we’ve built tools that allow you to stay in control, secure your account, and stay safe on the platform."; }
+}
+
+
+const cookieConsent = `fd924-cookie-cosent`;
+class CookieCosent extends HTMLElement {
+		state = {
+			hasOpen: true,
+		}
+		connectedCallback() {
+		this.renderHtml();
+		this.registerEvent();
+	}
+	renderHtml() {
+		this.innerHTML = /*html*/`
+		<div class="fd924-cookie-cosent ">
+			<div class="fd924-model-cookie  modal">
+				<div class="fd924-model-content ">
+					<div class="fd924-model-header">
+						<p class="fd924-text-title-header">Manage Consent Preferences</p>
+						<div class="fd924-model-icon-x">
+							<button type="button" class="btn-close" aria-label="Close"></button>
+						</div>
+					</div>
+					<div class="fd924-model-body" >
+						<fd924-purpost-box ></fd924-purpost-box>
+					</div>
+						<div class="fd924-model-footer">
+							<div class="fd924-footer-btn">
+								<button class="fd924-btn fd924-btn-left">
+									Reject All
+								</button>
+								<button class="fd924-btn fd924-btn-right">
+									Confirm My Choices
+								</button>
+							</div>
+							<div class="fd924-box-powered-by">
+								<a href="https://www.google.co.th/" >	
+									<span class="fd924-powerd-by">Powered by</span> <span class="fd924-powerd-link">Test<span>
+								</a>
+							</div>
+						</div>
+				</div>
+			</div>
+			<div class="fd924-bg-overly modal-background"></div>
+		</div>`
+		this.querySelector(`.fd924-cookie-cosent`).classList.add("fd924-anime");
+	}
+	onToggleModal() {
+		this.state.hasOpen = !this.state.hasOpen;
+		if(!this.state.hasOpen) { 
+				this.querySelector(`.fd924-cookie-cosent`).classList.add("out");
+				setTimeout(() => {
+					this.remove();
+				}, 500);
+		}
+	}
+	onHandeRejactAll() {
+		const myEvent = new CustomEvent("onEventRejectAll", { bubbles: true, });
+		document.dispatchEvent(myEvent);
+	}
+	onHandeConfirmAll() {
+		const myEvent = new CustomEvent("onEventConfirmAll", { bubbles: true, });
+		document.dispatchEvent(myEvent);
+	}
+	
+	
+	registerEvent() {
+		this.querySelector(`.fd924-model-icon-x`).addEventListener('click', this.onToggleModal.bind(this));
+		this.querySelector(`.fd924-bg-overly`).addEventListener('click',this.onToggleModal.bind(this));
+		this.querySelector(`.fd924-btn-left`).addEventListener('click', this.onHandeRejactAll.bind(this));
+		this.querySelector(`.fd924-btn-right`).addEventListener('click',this.onHandeConfirmAll.bind(this));
+		
+	}
+}
+const iconCookieCosent = `fd924-icon-cookie-cookie`;
+class IconCookieCosent extends HTMLElement {
+		connectedCallback() {
+		this.renderHtml();
+		this.registerEvent();
+	}
+	renderHtml() {
+		this.innerHTML = /*html*/`
+		<a class="fd924-icon-cookie-cookie" href="#">
+			<div class="fd924-box-icon-consent"  >Icon</div>
+		</a>`
+	}
+
+	registerEvent() {
+		this.querySelector(`.fd924-box-icon-consent`).addEventListener('click',(e) => {
+			e.preventDefault()
+			let element = document.createElement(cookieConsent);
+			document.getElementsByTagName('body')[0].append(element)
+		});
+	}
+}

@@ -43,7 +43,6 @@ gulp.task('less', function(){
 	
 
 gulp.task('js', function () {
-  console.log(uglify())
   return gulp.src(paths.srcJS)
   .pipe(concat('script.js'))
   .pipe(gulp.dest(paths.tmp));
