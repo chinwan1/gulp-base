@@ -30,22 +30,81 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+var storeDatafd924 = {
+  state: {
+    cookieID: '',
+    titleModal: '',
+    priveryModal: '',
+    purposes: []
+  },
+  loadDataFromPersistence: function loadDataFromPersistence() {
+    var storeData = localStorage.getItem('storeDatafd924');
+    if (!storeData) return {
+      emptyData: true
+    };
+    var item = JSON.parse(storeData);
+    if (!item) return {
+      emptyData: true
+    };
+    return {
+      emptyData: false,
+      data: item
+    };
+  },
+  mapperStateAllow: function mapperStateAllow(oldState, newState) {
+    return newState.map(function (item) {
+      var found = oldState.find(function (o) {
+        return o.id === item.id;
+      });
+      if (found) item.hasAllow = found.hasAllow;
+      return item;
+    });
+  },
+  createNewState: function createNewState(oldState, newState) {
+    var purposes = storeDatafd924.mapperStateAllow(oldState, newState);
+    return {
+      purposes: purposes
+    };
+  },
+  setInitState: function setInitState(input) {
+    storeDatafd924.state.titleModal = input.titleModal;
+    storeDatafd924.state.priveryModal = input.priveryModal;
+    storeDatafd924.state.purposes = input.purposes;
+    var localStore = storeDatafd924.loadDataFromPersistence();
+
+    if (!localStore.emptyData) {
+      var newState = storeDatafd924.createNewState(localStore.data.purposes, input.purposes);
+      console.log(newState);
+      storeDatafd924.state.purposes = newState.purposes;
+    }
+  },
+  saveState: function saveState() {
+    localStorage.setItem('storeDatafd924', JSON.stringify({
+      purposes: storeDatafd924.state.purposes,
+      cookieID: storeDatafd924.state.cookieID
+    }));
+  }
+};
 var CSent = {
   inititail: function inititail(options) {
     CSent.regsiterComponents();
+    storeDatafd924.setInitState(options);
 
     if (CSent.hasCookie(document.cookie)) {
       CSent.renderIconCookieConnset();
     } else {
-      CSent.renderFooterPrivacy();
+      CSent.renderFooterPrivacy(options);
     }
   },
-  renderIconCookieConnset: function renderIconCookieConnset() {
+  renderIconCookieConnset: function renderIconCookieConnset(options) {
     var element = document.createElement(iconCookieCosent);
     document.getElementsByTagName('body')[0].append(element);
   },
-  renderFooterPrivacy: function renderFooterPrivacy() {
+  renderFooterPrivacy: function renderFooterPrivacy(options) {
     var element = document.createElement(footerPrivacy);
+    element.setAttribute('moreUrl', options.link || '');
+    element.setAttribute('textPrivary', options.text || '');
+    element.setAttribute('webkit', options.webkit || '');
     document.getElementsByTagName('body')[0].append(element);
   },
   regsiterComponents: function regsiterComponents() {
@@ -111,18 +170,14 @@ var FooterPrivacy = /*#__PURE__*/function (_HTMLElement) {
 
     _this = _super.call.apply(_super, [this].concat(args));
 
-    _defineProperty(_assertThisInitialized(_this), "state", {
+    _defineProperty(_assertThisInitialized(_this), "state", _defineProperty({
       text: '',
       link: '',
       webkit: '',
       confirm: '',
-      urlMoreCookie: '' // elment: {
-      //     popup: null,
-      //     style: null,
-      //     text: 'เว็บไซต์ {webkit} ใช้คุกกี้ซึ่งทำให้เว็บไซต์ใช้งานง่ายขึ้น <a href="{linkit}" style="color:#000000;" target="_blank">เรียนรู้เกี่ยวกับคุกกี้ของเบราว์เซอร์เพิ่มเติม</a>'
-      // }
-
-    });
+      urlMoreCookie: '',
+      textPrivary: ''
+    }, "webkit", ''));
 
     return _this;
   }
@@ -130,7 +185,7 @@ var FooterPrivacy = /*#__PURE__*/function (_HTMLElement) {
   _createClass(FooterPrivacy, [{
     key: "connectedCallback",
     value: function connectedCallback(options) {
-      // this.initValue()
+      this.initValue();
       this.renderHtml();
       this.registerEvent();
     }
@@ -139,7 +194,7 @@ var FooterPrivacy = /*#__PURE__*/function (_HTMLElement) {
     value: function renderHtml() {
       this.innerHTML =
       /*html*/
-      "\n      <div id=\"cokiepop\" class=\"fd924-footer-privacy\">\n        <div class=\"fd924-left-box\">\u0E40\u0E27\u0E47\u0E1A\u0E44\u0E0B\u0E15\u0E4C  \u0E43\u0E0A\u0E49\u0E04\u0E38\u0E01\u0E01\u0E35\u0E49\u0E0B\u0E36\u0E48\u0E07\u0E17\u0E33\u0E43\u0E2B\u0E49\u0E40\u0E27\u0E47\u0E1A\u0E44\u0E0B\u0E15\u0E4C\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E07\u0E48\u0E32\u0E22\u0E02\u0E36\u0E49\u0E19 \n          <a href=".concat(this.state.urlMoreCookie, "  target=\"_blank\">\u0E40\u0E23\u0E35\u0E22\u0E19\u0E23\u0E39\u0E49\u0E40\u0E01\u0E35\u0E48\u0E22\u0E27\u0E01\u0E31\u0E1A\u0E04\u0E38\u0E01\u0E01\u0E35\u0E49\u0E02\u0E2D\u0E07\u0E40\u0E1A\u0E23\u0E32\u0E27\u0E4C\u0E40\u0E0B\u0E2D\u0E23\u0E4C\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E40\u0E15\u0E34\u0E21 </a>\n        </div>\n\n        <div class=\"fd924-right-box\">\n          <a  href=\"#\" class=\"fd924-setting\">\u0E15\u0E31\u0E49\u0E07\u0E04\u0E48\u0E32</a>\n          <div id=\"btnconfirm\" class=\"fd924-footer-btnconfirm\">\n            <span>\u0E15\u0E01\u0E25\u0E07</span>\n          </div>\n        </div>\n      </div>\n\t\t");
+      "\n      <div id=\"cokiepop\" class=\"fd924-footer-privacy\">\n      <div class=\"fd924-footer-wrapper\">\n        <div class=\"fd924-left-box\"> \n          ".concat(this.state.textPrivary, "\n        </div>\n\n        <div class=\"fd924-right-box\">\n          <a  href=\"#\" class=\"fd924-setting\">\u0E15\u0E31\u0E49\u0E07\u0E04\u0E48\u0E32</a>\n          <div id=\"btnconfirm\" class=\"fd924-footer-btnconfirm\">\n            <span>\u0E15\u0E01\u0E25\u0E07</span>\n          </div>\n        </div>\n      </div>\n      </div>\n\t\t");
     }
   }, {
     key: "registerEvent",
@@ -153,6 +208,12 @@ var FooterPrivacy = /*#__PURE__*/function (_HTMLElement) {
       e.preventDefault();
       var element = document.createElement(cookieConsent);
       document.getElementsByTagName('body')[0].append(element);
+    }
+  }, {
+    key: "initValue",
+    value: function initValue() {
+      this.state.urlMoreCookie = this.getAttribute('moreurl');
+      this.state.textPrivary = this.getAttribute('textPrivary');
     }
   }, {
     key: "onAccept",
@@ -195,7 +256,9 @@ var PurpostItem = /*#__PURE__*/function (_HTMLElement2) {
     _this2 = _super2.call.apply(_super2, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this2), "state", {
+      index: 0,
       title: "",
+      description: "",
       hasExpland: false,
       hasAccept: false
     });
@@ -215,38 +278,25 @@ var PurpostItem = /*#__PURE__*/function (_HTMLElement2) {
     value: function renderHtml() {
       this.innerHTML =
       /*html*/
-      "\n\t\t\t\t<div class=\"fd924-purpose-box-item\">\n\t\t\t\t\t<div class=\"fd924-purpose-box-header\">\n\t\t\t\t\t\t<div class=\"fd924-area-explad\"></div>\n\t\t\t\t\t\t<div class=\"fd924-purpose-left-box\">\n            <div class=\"fd924-pupose-expand\"><span></span><span></span></div>\n\t\t\t\t\t\t\t<p class=\"fd924-tilte fd924-text-title-card\">".concat(this.state.title, "</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"fd924-purpose-right-box\">\n\t\t\t\t\t\t\t<label class=\"fd924-switch\">\n\t\t\t\t\t\t\t<input type=\"checkbox\" ").concat(this.state.hasAccept ? "checked" : "", " >\t\n\t\t\t\t\t\t\t<span class=\"fd924-slider round\"></span>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"fd924-detail fd924-text-detail has-close-detail\">\n\t\t\t\t\t\tThese cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t");
+      "\n\t\t\t\t<div class=\"fd924-purpose-box-item\">\n\t\t\t\t\t<div class=\"fd924-purpose-box-header\">\n\t\t\t\t\t\t<div class=\"fd924-area-explad\"></div>\n\t\t\t\t\t\t<div class=\"fd924-purpose-left-box\">\n            <div class=\"fd924-pupose-expand\"><span></span><span></span></div>\n\t\t\t\t\t\t\t<p class=\"fd924-tilte fd924-text-title-card\">".concat(storeDatafd924.state.purposes[this.state.index].title, "</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"fd924-purpose-right-box\">\n\t\t\t\t\t\t\t<label class=\"fd924-switch\">\n\t\t\t\t\t\t\t<input type=\"checkbox\" ").concat(storeDatafd924.state.purposes[this.state.index].hasAllow ? "checked" : "", " >\t\n\t\t\t\t\t\t\t<span class=\"fd924-slider round\"></span>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"fd924-detail fd924-text-detail has-close-detail\">\n\t\t\t\t\t\t").concat(storeDatafd924.state.purposes[this.state.index].description, "\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t");
     }
   }, {
     key: "initValue",
     value: function initValue(input) {
-      if (this.attributes["data-title"]) {
-        this.state.title = this.attributes["data-title"].value;
-      }
-
-      if (this.attributes["data-has-expland"]) {
-        this.state.hasExpland = this.attributes["data-has-expland"].value || false;
-      }
-
-      if (this.attributes[["data-has-accept"]]) {
-        this.state.hasAccept = this.attributes["data-has-accept"].value === 'true' ? true : false;
-      } else {
-        this.state.hasAccept = this.attributes["data-has-accept"].value || false;
-      }
+      this.state.index = this.getAttribute("data-index");
+      var item = storeDatafd924.state.purposes[this.state.index];
     }
   }, {
     key: "onRejectAll",
     value: function onRejectAll() {
       var input = this.querySelector("input");
       input.checked = false;
-      this.state.hasAccept = false;
     }
   }, {
     key: "onConfirmAll",
     value: function onConfirmAll() {
       var input = this.querySelector("input");
       input.checked = true;
-      this.state.hasAccept = true;
     }
   }, {
     key: "onToggleExpand",
@@ -276,6 +326,7 @@ var PurpostItem = /*#__PURE__*/function (_HTMLElement2) {
 
       this.querySelector("input").addEventListener('click', function (event) {
         _this3.state.hasAccept = event.target.checked;
+        storeDatafd924.saveState();
       });
       this.querySelector(".fd924-area-explad").addEventListener('click', this.onToggleExpand.bind(this));
       document.addEventListener("onEventRejectAll", this.onRejectAll.bind(this));
@@ -322,12 +373,23 @@ var PurpostBox = /*#__PURE__*/function (_HTMLElement3) {
     value: function renderHtml() {
       this.innerHTML =
       /*html*/
-      "\n\t\t<div class=\"fd924-purpost-box\">\n\t\t\t<div class=\"fd924-purpose-box-title \">\n\t\t\t\t<p class=\"fd924-text-privacy-text\">".concat(this.state.title, "</p>\n\t\t\t</div>\n\t\t\t<div class=\"fd924-purpose-box-list\">\n\t\t\t\t<fd924-purpost-item data-title='test' data-has-accept=false></fd924-purpost-item>\n\t\t\t\t<fd924-purpost-item data-title='op' data-has-accept=false></fd924-purpost-item>\n\t\t\t</div>\n\t\t</div>\n\t\t");
+      "\n\t\t<div class=\"fd924-purpost-box\">\n\t\t\t<div class=\"fd924-purpose-box-title \">\n\t\t\t\t<p class=\"fd924-text-privacy-text\">".concat(this.state.title, "</p>\n\t\t\t</div>\n\t\t\t<div class=\"fd924-purpose-box-list\">\n\t\t\t\t").concat(this.renderContent(), "\n\t\t\t</div>\n\t\t</div>\n\t\t");
+    }
+  }, {
+    key: "renderContent",
+    value: function renderContent() {
+      var html = '';
+
+      for (var i = 0; i < storeDatafd924.state.purposes.length; i++) {
+        html += "<fd924-purpost-item data-index=".concat(i, " ></fd924-purpost-item>");
+      }
+
+      return html;
     }
   }, {
     key: "initValue",
     value: function initValue(input) {
-      this.state.title = "Who you talk to and what you share should be up to you. We’re dedicated to making sure Messenger is a safe, private, and secure place for you to connect with the people who matter. To do this, we’ve built tools that allow you to stay in control, secure your account, and stay safe on the platform.";
+      this.state.title = storeDatafd924.state.priveryModal;
     }
   }]);
 
@@ -353,7 +415,8 @@ var CookieCosent = /*#__PURE__*/function (_HTMLElement4) {
     _this5 = _super4.call.apply(_super4, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this5), "state", {
-      hasOpen: true
+      hasOpen: true,
+      titleModal: ''
     });
 
     return _this5;
@@ -362,15 +425,22 @@ var CookieCosent = /*#__PURE__*/function (_HTMLElement4) {
   _createClass(CookieCosent, [{
     key: "connectedCallback",
     value: function connectedCallback() {
+      this.initValue();
       this.renderHtml();
       this.registerEvent();
+    }
+  }, {
+    key: "initValue",
+    value: function initValue() {
+      this.state.titleModal = storeDatafd924.state.titleModal;
+      this.state.description = this.getAttribute('data-description');
     }
   }, {
     key: "renderHtml",
     value: function renderHtml() {
       this.innerHTML =
       /*html*/
-      "\n\t\t<div class=\"fd924-cookie-cosent \">\n\t\t\t<div class=\"fd924-model-cookie  modal\">\n\t\t\t\t<div class=\"fd924-model-content \">\n\t\t\t\t\t<div class=\"fd924-model-header\">\n\t\t\t\t\t\t<p class=\"fd924-text-title-header\">Manage Consent Preferences</p>\n\t\t\t\t\t\t<div class=\"fd924-model-icon-x\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn-close\" aria-label=\"Close\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"fd924-model-body\" >\n\t\t\t\t\t\t<fd924-purpost-box ></fd924-purpost-box>\n\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fd924-model-footer\">\n\t\t\t\t\t\t\t<div class=\"fd924-footer-btn\">\n\t\t\t\t\t\t\t\t<button class=\"fd924-btn fd924-btn-left\">\n\t\t\t\t\t\t\t\t\tReject All\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t<button class=\"fd924-btn fd924-btn-right\">\n\t\t\t\t\t\t\t\t\tConfirm My Choices\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"fd924-box-powered-by\">\n\t\t\t\t\t\t\t\t<a href=\"https://www.google.co.th/\" >\t\n\t\t\t\t\t\t\t\t\t<span class=\"fd924-powerd-by\">Powered by</span> <span class=\"fd924-powerd-link\">Test<span>\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"fd924-bg-overly modal-background\"></div>\n\t\t</div>";
+      "\n\t\t<div class=\"fd924-cookie-cosent \">\n\t\t\t<div class=\"fd924-model-cookie fd924-modal\">\n\t\t\t\t<div class=\"fd924-model-content \">\n\t\t\t\t\t<div class=\"fd924-model-header\">\n\t\t\t\t\t\t<p class=\"fd924-text-title-header\">".concat(this.state.titleModal, "</p>\n\t\t\t\t\t\t<div class=\"fd924-model-icon-x\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn-close\" aria-label=\"Close\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"fd924-model-body\" >\n\t\t\t\t\t\t<fd924-purpost-box  ></fd924-purpost-box>\n\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fd924-model-footer\">\n\t\t\t\t\t\t\t<div class=\"fd924-footer-btn\">\n\t\t\t\t\t\t\t\t<button class=\"fd924-btn fd924-btn-left\">\n\t\t\t\t\t\t\t\t\tReject All\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t<button class=\"fd924-btn fd924-btn-right\">\n\t\t\t\t\t\t\t\t\tConfirm My Choices\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"fd924-box-powered-by\">\n\t\t\t\t\t\t\t\t<a href=\"https://www.google.co.th/\" >\t\n\t\t\t\t\t\t\t\t\t<span class=\"fd924-powerd-by\">Powered by</span> <span class=\"fd924-powerd-link\">Test<span>\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"fd924-bg-overly fd924-modal-background\"></div>\n\t\t</div>");
       this.querySelector(".fd924-cookie-cosent").classList.add("fd924-anime");
     }
   }, {
@@ -381,10 +451,17 @@ var CookieCosent = /*#__PURE__*/function (_HTMLElement4) {
       this.state.hasOpen = !this.state.hasOpen;
 
       if (!this.state.hasOpen) {
-        this.querySelector(".fd924-cookie-cosent").classList.add("out");
+        this.querySelector(".fd924-cookie-cosent").classList.add("fd924-out");
         setTimeout(function () {
           _this6.remove();
         }, 500);
+      }
+    }
+  }, {
+    key: "setStateSwitch",
+    value: function setStateSwitch(state) {
+      for (var i = 0; i < storeDatafd924.state.purposes.length; i++) {
+        storeDatafd924.state.purposes[i].hasAllow = state;
       }
     }
   }, {
@@ -394,6 +471,8 @@ var CookieCosent = /*#__PURE__*/function (_HTMLElement4) {
         bubbles: true
       });
       document.dispatchEvent(myEvent);
+      this.setStateSwitch(false);
+      storeDatafd924.saveState();
     }
   }, {
     key: "onHandeConfirmAll",
@@ -402,6 +481,8 @@ var CookieCosent = /*#__PURE__*/function (_HTMLElement4) {
         bubbles: true
       });
       document.dispatchEvent(myEvent);
+      this.setStateSwitch(true);
+      storeDatafd924.saveState();
     }
   }, {
     key: "registerEvent",

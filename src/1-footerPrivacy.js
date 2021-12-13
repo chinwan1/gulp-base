@@ -6,23 +6,20 @@ class FooterPrivacy extends HTMLElement {
     webkit: '',
     confirm: '',
     urlMoreCookie: '',
-    // elment: {
-    //     popup: null,
-    //     style: null,
-    //     text: 'เว็บไซต์ {webkit} ใช้คุกกี้ซึ่งทำให้เว็บไซต์ใช้งานง่ายขึ้น <a href="{linkit}" style="color:#000000;" target="_blank">เรียนรู้เกี่ยวกับคุกกี้ของเบราว์เซอร์เพิ่มเติม</a>'
-    // }
-
+    textPrivary: '',
+    webkit: '',
   };
   connectedCallback(options) {
-		// this.initValue()
+		this.initValue()
 		this.renderHtml();
 		this.registerEvent();
 	}
 	renderHtml() {
 		this.innerHTML = /*html*/`
       <div id="cokiepop" class="fd924-footer-privacy">
-        <div class="fd924-left-box">เว็บไซต์  ใช้คุกกี้ซึ่งทำให้เว็บไซต์ใช้งานง่ายขึ้น 
-          <a href=${this.state.urlMoreCookie}  target="_blank">เรียนรู้เกี่ยวกับคุกกี้ของเบราว์เซอร์เพิ่มเติม </a>
+      <div class="fd924-footer-wrapper">
+        <div class="fd924-left-box"> 
+          ${this.state.textPrivary}
         </div>
 
         <div class="fd924-right-box">
@@ -31,6 +28,7 @@ class FooterPrivacy extends HTMLElement {
             <span>ตกลง</span>
           </div>
         </div>
+      </div>
       </div>
 		`
 	}
@@ -42,6 +40,10 @@ class FooterPrivacy extends HTMLElement {
     e.preventDefault()
     let element = document.createElement(cookieConsent);
     document.getElementsByTagName('body')[0].append(element)
+  }
+  initValue()  {
+    this.state.urlMoreCookie = this.getAttribute('moreurl');
+    this.state.textPrivary = this.getAttribute('textPrivary')
   }
   onAccept () {
     try {
