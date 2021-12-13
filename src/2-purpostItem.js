@@ -55,7 +55,7 @@ class PurpostItem extends HTMLElement {
 		const domItem = this.querySelector(".fd924-detail");
 		const domExpland = this.querySelector(".fd924-pupose-expand");
 		if(this.state.hasExpland) {
-			domItem.style["margin-top"] = "15px";
+			domItem.style["margin-top"] = "18px";
 			domItem.classList.add("has-open-deatail");
 			domItem.classList.remove("has-close-detail");
 			domExpland.classList.add("subtract");

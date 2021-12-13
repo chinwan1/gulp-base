@@ -1,3 +1,4 @@
+
 var storeDatafd924 = {
 	
 	state: {
@@ -38,7 +39,6 @@ var storeDatafd924 = {
 		var localStore = storeDatafd924.loadDataFromPersistence();
 		if(!localStore.emptyData) {
 			var newState = storeDatafd924.createNewState(localStore.data.purposes, input.purposes);
-			console.log(newState)
 			storeDatafd924.state.purposes = newState.purposes;
 		}
 	},
