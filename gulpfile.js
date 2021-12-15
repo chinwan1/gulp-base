@@ -92,12 +92,14 @@ gulp.task('html:dist', function () {
     .pipe(htmlclean())
     .pipe(gulp.dest(paths.dist));
 });
-gulp.task('less:dist', function () {
-  return gulp.src(paths.srcLess)
-    .pipe(concat('style.min.css'))
-    .pipe(cleanCSS())
-    .pipe(gulp.dest(paths.dist));
+
+gulp.task('less:dist', function(){ 
+	return gulp.src(paths.srcLess). 
+	pipe(less()). 
+	pipe(minifyCSS({})). 
+	pipe(gulp.dest(paths.dist)); 
 });
+
 gulp.task('js:dist', function () {
   return gulp.src(paths.srcJS)
     .pipe(concat('script.min.js'))
