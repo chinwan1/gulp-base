@@ -35,7 +35,42 @@ var storeDatafd924 = {
     cookieID: '',
     titleModal: '',
     priveryModal: '',
-    purposes: []
+    purposes: [],
+    preview: true,
+    ciColor: {
+      footerPrivacyComponay: {
+        privacyTextLinkColor: '',
+        privacyTextColor: '',
+        privacySettingColor: '',
+        bgBtnOkTextColor: '',
+        btnTextOkBgColor: ''
+      },
+      modalComponay: {
+        modalTitleColor: '',
+        modelSubTitleColor: '',
+        btnRejectTextColor: '',
+        btnRejectBgColor: '',
+        btnConfireTextColor: '',
+        btnConfireBgColor: '',
+        purposeTextColor: '',
+        purposeDetailText: '',
+        labeltextPower: '',
+        powerBy: ''
+      }
+    }
+  },
+  sendEventToPreview: function sendEventToPreview(data) {
+    var myEvent = new CustomEvent("eventModel", {
+      bubbles: true,
+      data: data
+    });
+    document.dispatchEvent(myEvent);
+  },
+  getCiFooterPrivacyComponay: function getCiFooterPrivacyComponay() {
+    return storeDatafd924.state.ciColor.footerPrivacyComponay;
+  },
+  getCiModalComponay: function getCiModalComponay() {
+    return storeDatafd924.state.ciColor.modalComponay;
   },
   loadDataFromPersistence: function loadDataFromPersistence() {
     var storeData = localStorage.getItem('storeDatafd924');
@@ -70,6 +105,11 @@ var storeDatafd924 = {
     storeDatafd924.state.titleModal = input.titleModal;
     storeDatafd924.state.priveryModal = input.priveryModal;
     storeDatafd924.state.purposes = input.purposes;
+
+    if (Object.keys(input.ciColor).length) {
+      storeDatafd924.state.ciColor = input.ciColor;
+    }
+
     var localStore = storeDatafd924.loadDataFromPersistence();
 
     if (!localStore.emptyData) {
@@ -194,6 +234,13 @@ var FooterPrivacy = /*#__PURE__*/function (_HTMLElement) {
       this.innerHTML =
       /*html*/
       "\n      <div id=\"cokiepop\" class=\"fd924-footer-privacy\">\n      <div class=\"fd924-footer-wrapper\">\n        <div class=\"fd924-left-box\"> \n          ".concat(this.state.textPrivary, "\n        </div>\n\n        <div class=\"fd924-right-box\">\n          <a  href=\"#\" class=\"fd924-setting\">\u0E15\u0E31\u0E49\u0E07\u0E04\u0E48\u0E32</a>\n          <div id=\"btnconfirm\" class=\"fd924-footer-btnconfirm\">\n            <span>\u0E15\u0E01\u0E25\u0E07</span>\n          </div>\n        </div>\n      </div>\n      </div>\n\t\t");
+      var ci = storeDatafd924.getCiFooterPrivacyComponay();
+      this.querySelector('.fd924-pricary-link').style.color = ci.privacyTextLinkColor;
+      this.querySelector('.fd924-left-box').style.color = ci.privacyTextLinkColor;
+      this.querySelector('.fd924-setting').style.color = ci.footerPrivacyComponay;
+      var btnPrivacy = this.querySelector('.fd924-footer-btnconfirm');
+      btnPrivacy.style.color = ci.bgBtnOkTextColor;
+      btnPrivacy.style.background = ci.btnTextOkBgColor;
     }
   }, {
     key: "registerEvent",
@@ -207,6 +254,9 @@ var FooterPrivacy = /*#__PURE__*/function (_HTMLElement) {
       e.preventDefault();
       var element = document.createElement(cookieConsent);
       document.getElementsByTagName('body')[0].append(element);
+      if (storeDatafd924.state.preview) storeDatafd924.sendEventToPreview({
+        model: 'Open'
+      });
     }
   }, {
     key: "initValue",
@@ -277,7 +327,10 @@ var PurpostItem = /*#__PURE__*/function (_HTMLElement2) {
     value: function renderHtml() {
       this.innerHTML =
       /*html*/
-      "\n\t\t\t\t<div class=\"fd924-purpose-box-item\">\n\t\t\t\t\t<div class=\"fd924-purpose-box-header\">\n\t\t\t\t\t\t<div class=\"fd924-area-explad\"></div>\n\t\t\t\t\t\t<div class=\"fd924-purpose-left-box\">\n            <div class=\"fd924-pupose-expand\"><span></span><span></span></div>\n\t\t\t\t\t\t\t<p class=\"fd924-tilte fd924-text-title-card\">".concat(storeDatafd924.state.purposes[this.state.index].title, "</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"fd924-purpose-right-box\">\n\t\t\t\t\t\t\t<label class=\"fd924-switch\">\n\t\t\t\t\t\t\t<input type=\"checkbox\" ").concat(storeDatafd924.state.purposes[this.state.index].hasAllow ? "checked" : "", " >\t\n\t\t\t\t\t\t\t<span class=\"fd924-slider round\"></span>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"fd924-detail fd924-text-detail has-close-detail\">\n\t\t\t\t\t\t").concat(storeDatafd924.state.purposes[this.state.index].description, "\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t");
+      "\n\t\t\t\t<div class=\"fd924-purpose-box-item\">\n\t\t\t\t\t<div class=\"fd924-purpose-box-header\">\n\t\t\t\t\t\t<div class=\"fd924-area-explad\"></div>\n\t\t\t\t\t\t<div class=\"fd924-purpose-left-box\">\n            <div class=\"fd924-pupose-expand\"><span></span><span></span></div>\n\t\t\t\t\t\t\t<p class=\"fd924-tilte fd924-text-title-card\">".concat(storeDatafd924.state.purposes[this.state.index].title, "</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"fd924-purpose-right-box\">\n\t\t\t\t\t\t\t<label class=\"fd924-switch\">\n\t\t\t\t\t\t\t<input type=\"checkbox\" ").concat(storeDatafd924.state.purposes[this.state.index].hasAllow ? "checked" : "", " >\t\n\t\t\t\t\t\t\t<span class=\"fd924-slider round\"></span>\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"fd924-detail fd924-text-detail has-close-detail\">\n\t\t\t\t\t\t").concat(storeDatafd924.state.purposes[this.state.index].description, "\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t");
+      var ci = storeDatafd924.getCiModalComponay();
+      this.querySelector('.fd924-text-title-card').style.color = ci.purposeTextColor;
+      this.querySelector('.fd924-text-detail').style.color = ci.purposeTextColor;
     }
   }, {
     key: "initValue",
@@ -440,7 +493,18 @@ var CookieCosent = /*#__PURE__*/function (_HTMLElement4) {
       this.innerHTML =
       /*html*/
       "\n\t\t<div class=\"fd924-cookie-cosent \">\n\t\t\t<div class=\"fd924-model-cookie fd924-modal\">\n\t\t\t\t<div class=\"fd924-model-content \">\n\t\t\t\t\t<div class=\"fd924-model-header\">\n\t\t\t\t\t\t<p class=\"fd924-text-title-header\">".concat(this.state.titleModal, "</p>\n\t\t\t\t\t\t<div class=\"fd924-model-icon-x\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn-close\" aria-label=\"Close\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"fd924-model-body\" >\n\t\t\t\t\t\t<fd924-purpost-box  ></fd924-purpost-box>\n\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fd924-model-footer\">\n\t\t\t\t\t\t\t<div class=\"fd924-footer-btn\">\n\t\t\t\t\t\t\t\t<button class=\"fd924-btn fd924-btn-left\">\n\t\t\t\t\t\t\t\t\tReject All\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t<button class=\"fd924-btn fd924-btn-right\">\n\t\t\t\t\t\t\t\t\tConfirm My Choices\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"fd924-box-powered-by\">\n\t\t\t\t\t\t\t\t<a href=\"https://www.google.co.th/\" >\t\n\t\t\t\t\t\t\t\t\t<span class=\"fd924-powerd-by\">Powered by</span> <span class=\"fd924-powerd-link\">Test<span>\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"fd924-bg-overly fd924-modal-background\"></div>\n\t\t</div>");
+      var ci = storeDatafd924.getCiModalComponay();
       this.querySelector(".fd924-cookie-cosent").classList.add("fd924-anime");
+      this.querySelector('.fd924-text-title-header').style.color = ci.modalTitleColor;
+      this.querySelector('.fd924-text-privacy-text').style.color = ci.modelSubTitleColor;
+      var btnLeft = this.querySelector('.fd924-btn-left');
+      btnLeft.style.color = ci.btnRejectTextColor;
+      btnLeft.style.background = ci.btnRejectBgColor;
+      var btnRight = this.querySelector('.fd924-btn-right');
+      btnRight.style.color = ci.btnConfireTextColor;
+      btnRight.style.background = ci.btnConfireBgColor;
+      this.querySelector('.fd924-powerd-by').style.color = ci.labeltextPower;
+      this.querySelector('.fd924-powerd-link').style.color = ci.powerBy;
     }
   }, {
     key: "onToggleModal",
@@ -539,6 +603,9 @@ var IconCookieCosent = /*#__PURE__*/function (_HTMLElement5) {
         e.preventDefault();
         var element = document.createElement(cookieConsent);
         document.getElementsByTagName('body')[0].append(element);
+        if (storeDatafd924.state.preview) storeDatafd924.sendEventToPreview({
+          model: 'Open'
+        });
       });
     }
   }]);

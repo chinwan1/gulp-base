@@ -5,7 +5,39 @@ var storeDatafd924 = {
 		cookieID: '',
 		titleModal: '',
 		priveryModal: '',
-		purposes: []
+		purposes: [],
+		preview: true,
+		ciColor: {
+			footerPrivacyComponay :{
+				privacyTextLinkColor: '',
+				privacyTextColor: '',
+				privacySettingColor: '',
+				bgBtnOkTextColor: '',
+				btnTextOkBgColor: '',
+			},
+			modalComponay: {
+				modalTitleColor: '',
+				modelSubTitleColor: '',
+				btnRejectTextColor: '',
+				btnRejectBgColor: '',
+				btnConfireTextColor: '',
+				btnConfireBgColor: '',
+				purposeTextColor: '',
+				purposeDetailText: '',
+				labeltextPower: '',
+				powerBy: '',
+			}
+		}
+	},
+	sendEventToPreview(data) {
+		const myEvent = new CustomEvent("eventModel", { bubbles: true, data });
+		document.dispatchEvent(myEvent);
+	},
+	getCiFooterPrivacyComponay(){
+		return storeDatafd924.state.ciColor.footerPrivacyComponay;
+	},
+	getCiModalComponay(){
+		return storeDatafd924.state.ciColor.modalComponay;
 	},
 	loadDataFromPersistence() {
 		var storeData = localStorage.getItem('storeDatafd924');
@@ -36,6 +68,7 @@ var storeDatafd924 = {
 		storeDatafd924.state.titleModal = input.titleModal;
 		storeDatafd924.state.priveryModal = input.priveryModal;
 		storeDatafd924.state.purposes = input.purposes;
+		if(Object.keys(input.ciColor).length){ storeDatafd924.state.ciColor = input.ciColor; }
 		var localStore = storeDatafd924.loadDataFromPersistence();
 		if(!localStore.emptyData) {
 			var newState = storeDatafd924.createNewState(localStore.data.purposes, input.purposes);

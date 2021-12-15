@@ -32,8 +32,11 @@ class PurpostItem extends HTMLElement {
 						${storeDatafd924.state.purposes[this.state.index].description}
 					</div>
 				</div>
-
 		`
+		
+    var ci = storeDatafd924.getCiModalComponay();
+		this.querySelector('.fd924-text-title-card').style.color = ci.purposeTextColor;
+		this.querySelector('.fd924-text-detail').style.color = 	ci.purposeTextColor;
 	}
 
 

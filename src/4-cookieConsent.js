@@ -46,7 +46,19 @@ class CookieCosent extends HTMLElement {
 			</div>
 			<div class="fd924-bg-overly fd924-modal-background"></div>
 		</div>`
+
+		var ci = storeDatafd924.getCiModalComponay();
 		this.querySelector(`.fd924-cookie-cosent`).classList.add("fd924-anime");
+		this.querySelector('.fd924-text-title-header').style.color = ci.modalTitleColor;
+		this.querySelector('.fd924-text-privacy-text').style.color = ci.modelSubTitleColor;
+		var btnLeft = this.querySelector('.fd924-btn-left')
+		btnLeft.style.color = ci.btnRejectTextColor;
+		btnLeft.style.background = ci.btnRejectBgColor;
+		var btnRight = this.querySelector('.fd924-btn-right')
+		btnRight.style.color = ci.btnConfireTextColor;
+		btnRight.style.background = ci.btnConfireBgColor;
+		this.querySelector('.fd924-powerd-by').style.color = ci.labeltextPower;
+		this.querySelector('.fd924-powerd-link').style.color = ci.powerBy;
 	}
 	onToggleModal() {
 		this.state.hasOpen = !this.state.hasOpen;

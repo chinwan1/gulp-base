@@ -31,7 +31,17 @@ class FooterPrivacy extends HTMLElement {
       </div>
       </div>
 		`
+    const ci = storeDatafd924.getCiFooterPrivacyComponay();
+    
+    this.querySelector('.fd924-pricary-link').style.color = ci.privacyTextLinkColor;
+    this.querySelector('.fd924-left-box').style.color = ci.privacyTextLinkColor;
+    this.querySelector('.fd924-setting').style.color = ci.footerPrivacyComponay;
+
+    var btnPrivacy = this.querySelector('.fd924-footer-btnconfirm')
+    btnPrivacy.style.color = ci.bgBtnOkTextColor;
+    btnPrivacy.style.background = ci.btnTextOkBgColor;
 	}
+  
   registerEvent() {
     this.querySelector("#btnconfirm").addEventListener("click", this.onAccept.bind(this))
     this.querySelector(".fd924-setting").addEventListener("click", this.onSetting.bind(this))
@@ -40,6 +50,7 @@ class FooterPrivacy extends HTMLElement {
     e.preventDefault()
     let element = document.createElement(cookieConsent);
     document.getElementsByTagName('body')[0].append(element)
+    if(storeDatafd924.state.preview)  storeDatafd924.sendEventToPreview({ model: 'Open'});
   }
   initValue()  {
     this.state.urlMoreCookie = this.getAttribute('moreurl');

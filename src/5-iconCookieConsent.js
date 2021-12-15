@@ -25,6 +25,7 @@ class IconCookieCosent extends HTMLElement {
 			e.preventDefault()
 			let element = document.createElement(cookieConsent);
 			document.getElementsByTagName('body')[0].append(element)
+			if(storeDatafd924.state.preview)  storeDatafd924.sendEventToPreview({ model: 'Open'});
 		});
 	}
 }
