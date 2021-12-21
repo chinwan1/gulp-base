@@ -14,7 +14,7 @@
     <!--[/htmlclean-protect]-->
 	<script>
 		
-
+    
 		window.onload = (event) => {
 			var css = document.createElement('link');
 			css.rel = "stylesheet"
@@ -28,33 +28,43 @@
 					webkit: 'Google',
 					text: 'นโยบายด้านความปลอดภัย The Wise Work <a class="fd924-pricary-link" href="https://www.thewiseworks.com" ">รายละเอียดเพิ่มเติม</a>',
 					titleModal: 'Manage Consent Preferences',
-					priveryModal: 'Who you talk to and what you share should be up to you. We’re dedicated to making sure Messenger is a safe, private, and secure place for you to connect with the people who matter. To do this, we’ve built tools that allow you to stay in control, secure your account, and stay safe on the platform.',
+					subtitleModal: 'Who you talk to and what you share should be up to you. We’re dedicated to making sure Messenger is a safe, private, and secure place for you to connect with the people who matter. To do this, we’ve built tools that allow you to stay in control, secure your account, and stay safe on the platform.',
+          btnPrivacyText: '',
+          btnTextOK: '',
+          btnRejectText: '',
+          btnConfireText: '',
+          labeltextPowerText: '',
+          powerByText: '',
+          preview: true,
 					purposes: [
 						{ id: 1,title: 'test1', description: `x`, textMore: '', urlMore: '', hasAllow: false  },
 						{ id: 2,title: 'test2', description: `These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.`, textMore: '', urlMore: '', hasAllow: false },
 						{ id: 3,title: 'test3', description: `These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.`, textMore: '', urlMore: '', hasAllow: false },
 					],
           ciColor: {
-            footerPrivacyComponay :{
-              privacyTextLinkColor: '',
-              privacyTextColor: '',
-              privacySettingColor: '',
-              bgBtnOkTextColor: '',
-              btnTextOkBgColor: '',
-            },
-            modalComponay: {
-              modalTitleColor: '',
-              modelSubTitleColor: '',
-              btnRejectTextColor: '',
-              btnRejectBgColor: '',
-              btnConfireTextColor: '',
-              btnConfireBgColor: '',
-              purposeTextColor: '',
-              purposeDetailText: '',
-              labeltextPower: '',
-              powerBy: '',
+              footerPrivacyCompany :{
+                privacyTextLinkColor: '',
+                privacyTextColor: '',
+                privacySettingColor: '',
+                bgBtnOkTextColor: '',
+                btnTextOkBgColor: '',
+              },
+              iconCookie: {
+                bgColor: 'yellow',
+              },
+              modalCompany: {
+                modalTitleColor: '',
+                modelSubTitleColor: '',
+                btnRejectTextColor: '',
+                btnRejectBgColor: '',
+                btnConfireTextColor: '',
+                btnConfireBgColor: '',
+                purposeTextColor: '',
+                purposeDetailText: '',
+                labeltextPowerColor: '',
+                powerByColor: '',
+              }
             }
-          }
 				});
 			};
 			script.src = "script.js";
@@ -64,3 +74,5 @@
 		</script>
   </body>
 </html>
+
+

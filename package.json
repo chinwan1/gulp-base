@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx gulp",
     "build": "npx gulp build",
-    "m-cs": "sh ./copy-consent.sh",
+    "m-cs-js": "sh ./copy-consent.js.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

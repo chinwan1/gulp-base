@@ -34,7 +34,7 @@ class PurpostItem extends HTMLElement {
 				</div>
 		`
 		
-    var ci = storeDatafd924.getCiModalComponay();
+    var ci = storeDatafd924.getCiModalCompany();
 		this.querySelector('.fd924-text-title-card').style.color = ci.purposeTextColor;
 		this.querySelector('.fd924-text-detail').style.color = 	ci.purposeTextColor;
 	}
@@ -43,7 +43,6 @@ class PurpostItem extends HTMLElement {
 
 	initValue(input) {
 		this.state.index = this.getAttribute("data-index");
-		const item = storeDatafd924.state.purposes[this.state.index];
 	}
 	onRejectAll() {
 		const input = this.querySelector("input")

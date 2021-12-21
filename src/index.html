@@ -14,8 +14,13 @@
     <!-- endinject -->
     <!--[/htmlclean-protect]-->
 		<div onclick="onChangeColor('red')">Red</div><div div onclick="onChangeColor('#7CFC00')" >Green</div>
-
+		<div onclick="testEvent('OPEN_MODAL')">Open</div>
+		<div onclick="testEvent('CLOSED_MODAL')">Close</div>
+		<div onclick="testMessage('CLOSED_MODAL')">TestMessage</div>
+		<div onclick="testOpenIconCookie('OPEN_ICON_COOKIE')">OPEN_ICON_COOKIE</div>
+		<div onclick="testOpenFooterCookie('OPEN_FOOTER')">OPEN_FOOTER</div>
 	<script>
+		var innerDoc = null;
 		tempData = {
 			color: '',
 		}
@@ -28,7 +33,10 @@
 			var boxsSubTitle = innerDoc.querySelectorAll('.fd924-detail')
 			if(boxsSubTitle && boxsSubTitle.length) boxsSubTitle.forEach((node) =>{ node.style.color = tempData.color; })
 		}
-
+		function testEvent(action) {
+			const myEvent = new CustomEvent("EventPreview", { bubbles: true, detail: { action }});
+			innerDoc.dispatchEvent(myEvent);
+		}
 		function setBtnRejctColor(innerDoc,bgColor, textColor) {
 			var btnRight = innerDoc.querySelector('.fd924-btn-right')
 			btnRight.style.color = textColor;
@@ -51,9 +59,36 @@
 		function setModalPowerByLinekColor(innerDoc,color) {
 			innerDoc.querySelector('.fd924-powerd-link').style.color = color;
 		}
+		function setPrivacySettingText(message) {
+			innerDoc.querySelector('.fd924-setting').innerText = message;
+		}
+		function setPrivacySettingButtonText(message) {
+			innerDoc.querySelector('.fd924-text-ok').innerText = message;
+		}
+		function setPolicyText(message) {
+			innerDoc.querySelector('.fd924-text-privary').innerText = message;
+		}
+
+		function setInitModalBox(data) {
+			const myEvent = new CustomEvent("EventPreview", { bubbles: true, detail: { action: 'INIT_TOKEM', data  }});
+			innerDoc.dispatchEvent(myEvent);
+		}
+		function testOpenIconCookie() {
+			const myEvent = new CustomEvent("EventPreview", { bubbles: true, detail: { action: 'OPEN_ICON_COOKIE'  }});
+			innerDoc.dispatchEvent(myEvent);
+		}
+		function testOpenFooterCookie() {
+			const myEvent = new CustomEvent("EventPreview", { bubbles: true, detail: { action: 'OPEN_FOOTER'  }});
+			innerDoc.dispatchEvent(myEvent);
+		}
+		function testMessage(message) {
+			setPrivacySettingText(message);
+			setPrivacySettingButtonText(message);
+			setPolicyText(message);
+		}
 		function registerEvent(e) {
 			var iframe = document.querySelector("#iframe_B");
-			var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+			innerDoc = iframe.contentDocument || iframe.contentWindow.document;
 			innerDoc.addEventListener("eventModel", (e) => {
 				setTimeout(() => {
 					setCardTitleColor(innerDoc,tempData.color);
@@ -66,11 +101,23 @@
 					setModalPowerByLinekColor(innerDoc,tempData.color);
 				},200)
 			});
+			setTimeout(() => {
+				setInitModalBox({
+					powerByText: 'test',
+					titleModal: 'test',
+					subtitleModal: 'test',
+					purposes: [
+						{ id: 1,title: 'test1', description: `x`, textMore: '', urlMore: '', hasAllow: false  },
+						{ id: 2,title: 'test2', description: `These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.`, textMore: '', urlMore: '', hasAllow: false },
+						{ id: 3,title: 'test3', description: `These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.`, textMore: '', urlMore: '', hasAllow: false },
+					],
+				});
+			}, 200);
 		}
 		function onChangeColor(color) {
 			tempData.color = color;
 			var iframe = document.querySelector("#iframe_B");
-			var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+			innerDoc = iframe.contentDocument || iframe.contentWindow.document;
 			innerDoc.querySelector('.fd924-pricary-link').style.color = color;
 			innerDoc.querySelector('.fd924-left-box').style.color = color;
 			innerDoc.querySelector('.fd924-setting').style.color = color;
@@ -83,31 +130,7 @@
 			setCardSubTitleColor(innerDoc,tempData.color)
 
 		}
-		// window.onload = (event) => {
-		// 	var css = document.createElement('link');
-		// 	css.rel = "stylesheet"
-		// 	css.href = "style.css"
-		// 	document.getElementsByTagName('head')[0].appendChild(css);
-		// 	var script = document.createElement('script');
 
-
-		// 	script.onload = function () {
-		// 		CSent.inititail({
-		// 			webkit: 'Google',
-		// 			text: 'นโยบายด้านความปลอดภัย The Wise Work <a href="https://www.thewiseworks.com" ">รายละเอียดเพิ่มเติม</a>',
-		// 			titleModal: 'Manage Consent Preferences',
-		// 			priveryModal: 'Who you talk to and what you share should be up to you. We’re dedicated to making sure Messenger is a safe, private, and secure place for you to connect with the people who matter. To do this, we’ve built tools that allow you to stay in control, secure your account, and stay safe on the platform.',
-		// 			purposes: [
-		// 				{ id: 1,title: 'test1', description: `x`, textMore: '', urlMore: '', hasAllow: false  },
-		// 				{ id: 2,title: 'test2', description: `These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.`, textMore: '', urlMore: '', hasAllow: false },
-		// 				{ id: 3,title: 'test3', description: `These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.`, textMore: '', urlMore: '', hasAllow: false },
-		// 			],
-		// 		});
-		// 	};
-		// 	script.src = "script.js";
-		// 	document.getElementsByTagName('head')[0].appendChild(script);
-		// }
-		
 		</script>
   </body>
 </html>
