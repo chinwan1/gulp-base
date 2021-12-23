@@ -16,8 +16,8 @@ var storeDatafd924 = {
         privacyTextLinkColor: "",
         privacyTextColor: "",
         privacySettingColor: "",
-        bgBtnOkTextColor: "red",
-        btnTextOkBgColor: "red",
+        bgBtnOkTextColor: "",
+        btnTextOkBgColor: "",
       },
       iconCookie: {
         bgColor: "",

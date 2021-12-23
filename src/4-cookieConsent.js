@@ -85,7 +85,7 @@ class CookieCosent extends HTMLElement {
 	
 	registerEvent() {
 		this.querySelector(`.fd924-model-icon-x`).addEventListener('click', this.onToggleModal.bind(this));
-		this.querySelector(`.fd924-bg-overly`).addEventListener('click',this.onToggleModal.bind(this));
+		// this.querySelector(`.fd924-bg-overly`).addEventListener('click',this.onToggleModal.bind(this));
 		this.querySelector(`.fd924-btn-left`).addEventListener('click', this.onHandeRejactAll.bind(this));
 		this.querySelector(`.fd924-btn-right`).addEventListener('click',this.onHandeConfirmAll.bind(this));
 		

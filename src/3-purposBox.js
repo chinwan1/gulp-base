@@ -4,6 +4,7 @@ class PurpostBox extends HTMLElement {
 		this.renderHtml();
 	}
 	renderHtml() {
+		const ci = storeDatafd924.getCiFooterPrivacyCompany();
 		this.innerHTML = /*html*/`
 		<div class="fd924-purpost-box">
 			<div class="fd924-purpose-box-title ">
@@ -14,6 +15,9 @@ class PurpostBox extends HTMLElement {
 			</div>
 		</div>
 		`
+		var dom = this.querySelector('.fd924-privacy-link');
+		if(!dom) return;
+		dom.style.color = 'black';
 	}
 	renderContent() {
 		var html = '';
