@@ -156,7 +156,6 @@ var storeDatafd924 = {
     storeDatafd924.state.btnConfireText = input.btnConfireText;
     storeDatafd924.state.labeltextPowerText = input.labeltextPowerText;
     storeDatafd924.state.powerByText = input.powerByText;
-    console.log(input);
     if (Object.keys(input.ciColor).length) {
       storeDatafd924.state.ciColor = input.ciColor;
     }
