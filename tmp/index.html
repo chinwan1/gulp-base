@@ -70,7 +70,7 @@
 		}
 
 		function setInitModalBox(data) {
-			const myEvent = new CustomEvent("EventPreview", { bubbles: true, detail: { action: 'INIT_TOKEM', data  }});
+			const myEvent = new CustomEvent("EventPreview", { bubbles: true, detail: { action: 'INIT_TOKEN', data  }});
 			innerDoc.dispatchEvent(myEvent);
 		}
 		function testOpenIconCookie() {
@@ -103,9 +103,9 @@
 			});
 			setTimeout(() => {
 				setInitModalBox({
-					powerByText: 'test',
-					titleModal: 'test',
-					subtitleModal: 'test',
+					powerByText: '',
+					titleModal: '',
+					subtitleModal: '',
 					purposes: [
 						{ id: 1,title: 'test1', description: `x`, textMore: '', urlMore: '', hasAllow: false  },
 						{ id: 2,title: 'test2', description: `These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.`, textMore: '', urlMore: '', hasAllow: false },
@@ -118,7 +118,7 @@
 			tempData.color = color;
 			var iframe = document.querySelector("#iframe_B");
 			innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-			innerDoc.querySelector('.fd924-pricary-link').style.color = color;
+			innerDoc.querySelector('.fd924-privacy-link').style.color = color;
 			innerDoc.querySelector('.fd924-left-box').style.color = color;
 			innerDoc.querySelector('.fd924-setting').style.color = color;
 

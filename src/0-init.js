@@ -16,11 +16,11 @@ var storeDatafd924 = {
         privacyTextLinkColor: "",
         privacyTextColor: "",
         privacySettingColor: "",
-        bgBtnOkTextColor: "",
-        btnTextOkBgColor: "",
+        bgBtnOkTextColor: "red",
+        btnTextOkBgColor: "red",
       },
       iconCookie: {
-        bgColor: '',
+        bgColor: "",
       },
       modalCompany: {
         modalTitleColor: "",
@@ -38,7 +38,7 @@ var storeDatafd924 = {
     },
   },
   sendEventToPreview(data) {
-    const myEvent = new CustomEvent("eventModel", { bubbles: true, data });
+    const myEvent = new CustomEvent("eventModel", { bubbles: true, detail:data });
     document.dispatchEvent(myEvent);
   },
   watchEventModalPreview() {
@@ -49,45 +49,66 @@ var storeDatafd924 = {
         document.getElementsByTagName("body")[0].append(element);
       } else if (e.detail.action === "CLOSED_MODAL" && item) {
         document
-          .querySelector(`.fd924-cookie-cosent`)
-          .classList.add("fd924-out");
+        .querySelector(`.fd924-cookie-cosent`)
+        .classList.add("fd924-out");
         setTimeout(() => {
           item.remove();
         }, 500);
-      } else if (e.detail.action === "INIT_TOKEM") {
+      } else if (e.detail.action === "INIT_TOKEN") {
         const data = e.detail.data;
         if (data.titleModal) storeDatafd924.state.titleModal = data.titleModal;
-        if (data.subtitleModal) storeDatafd924.state.subtitleModal = data.subtitleModal;
+        if (data.subtitleModal)
+          storeDatafd924.state.subtitleModal = data.subtitleModal;
         if (data.purposes && data.purposes.length) {
           storeDatafd924.state.purposes = data.purposes;
-        } else if(data.purposes && data.purposes.length === 0) {
-           storeDatafd924.state.purposes = [];
+        } else if (data.purposes && data.purposes.length === 0) {
+          storeDatafd924.state.purposes = [];
         }
-        
-        if (data.powerByText) {
-          storeDatafd924.state.ciColor.modalCompany.powerByText = data.powerByText;
 
+        if(data.iconCookieBg) {
+          storeDatafd924.state.ciColor.iconCookie.bgColor = data.iconCookieBg;
+        }
+
+        if (data.powerByText) {
+          storeDatafd924.state.ciColor.modalCompany.powerByText =
+            data.powerByText;
         }
       } else if (e.detail.action === "OPEN_ICON_COOKIE") {
         var itemPrivacy = document.querySelector("fd924-footer-privacy");
         if (itemPrivacy) itemPrivacy.remove();
-        let element = document.createElement(iconCookieCosent);
-        document.getElementsByTagName("body")[0].append(element);
+
+         
+        var iconCookie = document.querySelector(".fd924-icon-cookie");
+        if(!iconCookie){
+          let element = document.createElement(iconCookieCosent);
+          document.getElementsByTagName("body")[0].append(element);
+        }
+
       } else if (e.detail.action === "OPEN_FOOTER") {
         var item = document.querySelector(cookieConsent);
         var itemCookie = document.querySelector("fd924-icon-cookie");
-         var itemPrivacy = document.querySelector("fd924-footer-privacy");
+        var itemPrivacy = document.querySelector("fd924-footer-privacy");
         if (item) {
           document
             .querySelector(`.fd924-cookie-cosent`)
             .classList.add("fd924-out");
           setTimeout(() => {
             item.remove();
-            if(!itemPrivacy)CSent.renderFooterPrivacy({});
+            if (!itemPrivacy) var e = CSent.renderFooterPrivacy({});
+            if (storeDatafd924.state.preview) {
+              var fp = document.querySelector(".fd924-footer-privacy");
+              if (fp) fp.style.display = "block";
+            }
           }, 500);
-        } else if (itemCookie) {
+        } 
+        
+        if (itemCookie) {
           itemCookie.remove();
-          CSent.renderFooterPrivacy({});
+          var e = CSent.renderFooterPrivacy({});
+          if (storeDatafd924.state.preview) {
+            var fp = document.querySelector(".fd924-footer-privacy");
+            if (fp) fp.style.display = "block";
+          }
         }
       }
     });
@@ -135,6 +156,7 @@ var storeDatafd924 = {
     storeDatafd924.state.btnConfireText = input.btnConfireText;
     storeDatafd924.state.labeltextPowerText = input.labeltextPowerText;
     storeDatafd924.state.powerByText = input.powerByText;
+    console.log(input);
     if (Object.keys(input.ciColor).length) {
       storeDatafd924.state.ciColor = input.ciColor;
     }
@@ -178,6 +200,7 @@ var CSent = {
   renderFooterPrivacy() {
     let element = document.createElement(footerPrivacy);
     document.getElementsByTagName("body")[0].append(element);
+    return element;
   },
   regsiterComponents() {
     const components = [

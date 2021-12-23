@@ -23,16 +23,20 @@ class FooterPrivacy extends HTMLElement {
     </div>
     
     <div class="fd924-right-box">
-    <a  href="#" class="fd924-setting">${storeDatafd924.state.btnPrivacyText || 'ตั้งค่า'}</a>
-    <div id="btnconfirm" class="fd924-footer-btnconfirm">
-    <span class="fd924-text-ok" >${storeDatafd924.state.btnTextOK || 'ตกลง'}</span>
-    </div>
+      <a  href="#" class="fd924-setting">${storeDatafd924.state.btnPrivacyText || 'Settings'}</a>
+      <button id="btnconfirm" class="fd924-footer-btnconfirm">
+        <span class="fd924-text-ok" >${storeDatafd924.state.btnTextOK || 'Allow All'}</span>
+      </button>
     </div>
     </div>
     </div>
 		`
-    const pridom= this.querySelector('.fd924-privary-link')
-    if(pridom) pridom.style.color = ci.privacyTextLinkColor;
+    
+    var pridomLink= this.querySelector('.fd924-privacy-link');
+    if(pridomLink) pridomLink.style.color = ci.privacyTextLinkColor;
+
+    var pridomText= this.querySelector('.fd924-text-privary');
+    if(pridomText) pridomText.style.color = ci.privacyTextColor;
 
     this.querySelector('.fd924-setting').style.color = ci.privacySettingColor;
 
@@ -40,6 +44,11 @@ class FooterPrivacy extends HTMLElement {
     var textPrivacy = this.querySelector('.fd924-text-ok')
     textPrivacy.style.color = ci.bgBtnOkTextColor;
     btnPrivacy.style.background = ci.btnTextOkBgColor;
+
+    if(storeDatafd924.state.preview) {
+      var dom = this.querySelector('.fd924-footer-privacy');
+      if(dom) dom.style.display = 'none';
+    }
 	}
   
   registerEvent() {
@@ -64,6 +73,7 @@ class FooterPrivacy extends HTMLElement {
 
       let element = document.createElement(iconCookieCosent);
 			document.getElementsByTagName('body')[0].append(element)
+      storeDatafd924.sendEventToPreview({ model: 'OPEN_ICON_COKIE'});
     } catch (error) {
       console.log(error);
     }

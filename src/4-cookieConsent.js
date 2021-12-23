@@ -5,14 +5,10 @@ class CookieCosent extends HTMLElement {
 			titleModal: '',
 		}
 		connectedCallback() {
-		this.initValue();
 		this.renderHtml();
 		this.registerEvent();
 	}
-	initValue() {
-		this.state.titleModal = storeDatafd924.state.titleModal
-		this.state.description = this.getAttribute('data-description')
-	}
+
 	renderHtml() {
 		var ci = storeDatafd924.getCiModalCompany();
 		this.innerHTML = /*html*/`
@@ -20,7 +16,7 @@ class CookieCosent extends HTMLElement {
 			<div class="fd924-model-cookie fd924-modal">
 				<div class="fd924-model-content ">
 					<div class="fd924-model-header">
-						<p class="fd924-text-title-header">${this.state.titleModal}</p>
+						<p class="fd924-text-title-header">${storeDatafd924.state.titleModal}</p>
 						<div class="fd924-model-icon-x">
 							<button type="button" class="btn-close" aria-label="Close"></button>
 						</div>
@@ -31,15 +27,15 @@ class CookieCosent extends HTMLElement {
 						<div class="fd924-model-footer">
 							<div class="fd924-footer-btn">
 								<button class="fd924-btn fd924-btn-left">
-									${ storeDatafd924.state.btnRejectText || 'ยกเลิกทั้งหมด'}
+									${ storeDatafd924.state.btnRejectText || 'Reject All'}
 								</button>
 								<button class="fd924-btn fd924-btn-right">
-									${ storeDatafd924.state.btnConfireText || 'เลือกทั้งหมด'}
+									${ storeDatafd924.state.btnConfireText || 'Confirm My Choices'}
 								</button>
 							</div>
 							<div class="fd924-box-powered-by">
 								<a href="https://www.google.co.th/" >	
-									<span class="fd924-powerd-by">${ storeDatafd924.state.labeltextPowerText || 'สร้างโดย'}</span> <span class="fd924-powerd-link">${ storeDatafd924.state.powerByText || 'wisework'}<span>
+									<span class="fd924-powerd-by">${ storeDatafd924.state.labeltextPowerText || 'Powered by'}</span> <span class="fd924-powerd-link">${ storeDatafd924.state.powerByText || 'wisework'}<span>
 								</a>
 							</div>
 						</div>
