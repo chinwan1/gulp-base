@@ -38,8 +38,20 @@ var storeDatafd924 = {
     },
   },
   sendEventToPreview(data) {
-    const myEvent = new CustomEvent("eventModel", { bubbles: true, detail:data });
+    const myEvent = new CustomEvent("eventModel", {
+      bubbles: true,
+      detail: data,
+    });
     document.dispatchEvent(myEvent);
+  },
+  getCookieByName(name) {
+    var cname = name + "=";
+    var cookies = document.cookie.split("; ");
+    let value = undefined;
+    cookies.forEach((val) => {
+      if (val.indexOf(cname) === 0) value = val.substring(cname.length).split("; path=/")[0];
+    });
+    return value;
   },
   watchEventModalPreview() {
     document.addEventListener("EventPreview", (e) => {
@@ -49,8 +61,8 @@ var storeDatafd924 = {
         document.getElementsByTagName("body")[0].append(element);
       } else if (e.detail.action === "CLOSED_MODAL" && item) {
         document
-        .querySelector(`.fd924-cookie-cosent`)
-        .classList.add("fd924-out");
+          .querySelector(`.fd924-cookie-cosent`)
+          .classList.add("fd924-out");
         setTimeout(() => {
           item.remove();
         }, 500);
@@ -65,7 +77,7 @@ var storeDatafd924 = {
           storeDatafd924.state.purposes = [];
         }
 
-        if(data.iconCookieBg) {
+        if (data.iconCookieBg) {
           storeDatafd924.state.ciColor.iconCookie.bgColor = data.iconCookieBg;
         }
 
@@ -77,13 +89,11 @@ var storeDatafd924 = {
         var itemPrivacy = document.querySelector("fd924-footer-privacy");
         if (itemPrivacy) itemPrivacy.remove();
 
-         
         var iconCookie = document.querySelector(".fd924-icon-cookie");
-        if(!iconCookie){
+        if (!iconCookie) {
           let element = document.createElement(iconCookieCosent);
           document.getElementsByTagName("body")[0].append(element);
         }
-
       } else if (e.detail.action === "OPEN_FOOTER") {
         var item = document.querySelector(cookieConsent);
         var itemCookie = document.querySelector("fd924-icon-cookie");
@@ -100,8 +110,8 @@ var storeDatafd924 = {
               if (fp) fp.style.display = "block";
             }
           }, 500);
-        } 
-        
+        }
+
         if (itemCookie) {
           itemCookie.remove();
           var e = CSent.renderFooterPrivacy({});
@@ -120,7 +130,7 @@ var storeDatafd924 = {
     return storeDatafd924.state.ciColor.modalCompany;
   },
   loadDataFromPersistence() {
-    var storeData = localStorage.getItem("storeDatafd924");
+    var storeData =  storeDatafd924.getCookieByName("storeDatafd924");
     if (!storeData) return { emptyData: true };
     var item = JSON.parse(storeData);
     if (!item) return { emptyData: true };
@@ -169,13 +179,17 @@ var storeDatafd924 = {
     }
   },
   saveState() {
-    localStorage.setItem(
-      "storeDatafd924",
-      JSON.stringify({
-        purposes: storeDatafd924.state.purposes,
-        cookieID: storeDatafd924.state.cookieID,
-      })
-    );
+    // localStorage.setItem(
+    //   "storeDatafd924",
+    //   JSON.stringify({
+    //     purposes: storeDatafd924.state.purposes,
+    //     cookieID: storeDatafd924.state.cookieID,
+    //   })
+    // );
+    document.cookie = `storeDatafd924=${JSON.stringify({
+      purposes: storeDatafd924.state.purposes,
+      cookieID: storeDatafd924.state.cookieID,
+    })}; path=/`;
   },
 };
 
@@ -185,8 +199,9 @@ var CSent = {
     if (storeDatafd924.state.preview) {
       storeDatafd924.watchEventModalPreview();
     }
+
     CSent.regsiterComponents();
-    if (CSent.hasCookie(document.cookie)) {
+    if (storeDatafd924.getCookieByName("CONSENT")) {
       CSent.renderIconCookieConnset();
     } else {
       CSent.renderFooterPrivacy();

@@ -76,6 +76,15 @@ var storeDatafd924 = {
     });
     document.dispatchEvent(myEvent);
   },
+  getCookieByName: function getCookieByName(name) {
+    var cname = name + "=";
+    var cookies = document.cookie.split("; ");
+    var value = undefined;
+    cookies.forEach(function (val) {
+      if (val.indexOf(cname) === 0) value = val.substring(cname.length).split(" path=/")[0];
+    });
+    return value;
+  },
   watchEventModalPreview: function watchEventModalPreview() {
     document.addEventListener("EventPreview", function (e) {
       var item = document.querySelector(cookieConsent);
@@ -153,7 +162,7 @@ var storeDatafd924 = {
     return storeDatafd924.state.ciColor.modalCompany;
   },
   loadDataFromPersistence: function loadDataFromPersistence() {
-    var storeData = localStorage.getItem("storeDatafd924");
+    var storeData = storeDatafd924.getCookieByName("storeDatafd924");
     if (!storeData) return {
       emptyData: true
     };
@@ -206,10 +215,17 @@ var storeDatafd924 = {
     }
   },
   saveState: function saveState() {
-    localStorage.setItem("storeDatafd924", JSON.stringify({
+    // localStorage.setItem(
+    //   "storeDatafd924",
+    //   JSON.stringify({
+    //     purposes: storeDatafd924.state.purposes,
+    //     cookieID: storeDatafd924.state.cookieID,
+    //   })
+    // );
+    document.cookie = "storeDatafd924=".concat(JSON.stringify({
       purposes: storeDatafd924.state.purposes,
       cookieID: storeDatafd924.state.cookieID
-    }));
+    }), " path=/");
   }
 };
 var CSent = {
@@ -222,7 +238,7 @@ var CSent = {
 
     CSent.regsiterComponents();
 
-    if (CSent.hasCookie(document.cookie)) {
+    if (storeDatafd924.getCookieByName("CONSENT")) {
       CSent.renderIconCookieConnset();
     } else {
       CSent.renderFooterPrivacy();
