@@ -81,7 +81,7 @@ var storeDatafd924 = {
     var cookies = document.cookie.split("; ");
     var value = undefined;
     cookies.forEach(function (val) {
-      if (val.indexOf(cname) === 0) value = val.substring(cname.length).split(" path=/")[0];
+      if (val.indexOf(cname) === 0) value = val.substring(cname.length).split("; path=/")[0];
     });
     return value;
   },
@@ -225,7 +225,7 @@ var storeDatafd924 = {
     document.cookie = "storeDatafd924=".concat(JSON.stringify({
       purposes: storeDatafd924.state.purposes,
       cookieID: storeDatafd924.state.cookieID
-    }), " path=/");
+    }), "; path=/");
   }
 };
 var CSent = {

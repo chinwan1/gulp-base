@@ -9,6 +9,7 @@ var concat = require('gulp-concat');
 var less = require('gulp-less');
 var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css'); 
+var plumber = require('gulp-plumber');
 var projectStart = false;
 var paths = {
 	src: 'src/**/*',
@@ -35,7 +36,8 @@ gulp.task('html', function () {
 });
 
 gulp.task('less', function(){ 
-	return gulp.src(paths.srcLess). 
+	return gulp.src(paths.srcLess).
+  pipe(plumber()).
 	pipe(less()). 
 	pipe(minifyCSS({})). 
 	pipe(gulp.dest(paths.tmp)); 
@@ -44,6 +46,7 @@ gulp.task('less', function(){
 
 gulp.task('js', function () {
   return gulp.src(paths.srcJS)
+  .pipe(plumber())
   .pipe(concat('script.js'))
   .pipe(babel({ presets: ['@babel/env'] }))
   .pipe(gulp.dest(paths.tmp));
@@ -52,12 +55,9 @@ gulp.task('js', function () {
 gulp.task('copy', ['html', 'less','js']);
 
 gulp.task('inject', ['copy'], function () {
-  var css = gulp.src(paths.tmpCSS);
-  var js = gulp.src(paths.tmpJS);
-  var compactFile =  gulp.src(paths.tmpIndex)
-    // .pipe(inject( css, { relative:true } ))
-    // .pipe(inject( js, { relative:true } ))
-    .pipe(gulp.dest(paths.tmp));
+  var compactFile =  gulp.src(paths.tmpIndex).
+    pipe(plumber()).
+    pipe(gulp.dest(paths.tmp));
 		browserSync.reload();
 		return compactFile;
 });
@@ -89,12 +89,14 @@ gulp.task('default', ['watch']);
  */
 gulp.task('html:dist', function () {
   return gulp.src(paths.srcHTML)
+    .pipe(plumber())
     .pipe(htmlclean())
     .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('less:dist', function(){ 
-	return gulp.src(paths.srcLess). 
+	return gulp.src(paths.srcLess).
+  pipe(plumber()).
 	pipe(less()). 
 	pipe(minifyCSS({})). 
 	pipe(gulp.dest(paths.dist)); 
@@ -102,6 +104,7 @@ gulp.task('less:dist', function(){
 
 gulp.task('js:dist', function () {
   return gulp.src(paths.srcJS)
+    .pipe(plumber())
     .pipe(concat('script.min.js'))
     .pipe(babel({ presets: ['@babel/env'] }))
     .pipe(uglify())
@@ -112,6 +115,7 @@ gulp.task('inject:dist', ['copy:dist'], function () {
   var css = gulp.src(paths.distCSS);
   var js = gulp.src(paths.distJS);
   return gulp.src(paths.distIndex)
+    .pipe(plumber())
     .pipe(inject( css, { relative:true } ))
     .pipe(inject( js, { relative:true } ))
     .pipe(gulp.dest(paths.dist));

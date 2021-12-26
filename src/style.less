@@ -29,7 +29,7 @@
   width: 100%;
   position: fixed;
   bottom: 0px;
-  z-index: 1000;
+  z-index: 99999;
   left: 0px;
   font-size: 15px;
   background: #414042;
@@ -180,7 +180,7 @@
     border-radius: 10px;
     position: absolute;
     overflow: hidden;
-    z-index: 99;
+    z-index: 99999;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -242,7 +242,7 @@
                 left: -15px;
                 right: -15px;
                 bottom: -15px;
-                z-index: 2;
+                z-index: 99999;
                 cursor: pointer;
               }
             }
@@ -263,26 +263,26 @@
               display: inline-block;
               width: 60px;
               height: 34px;
-              z-index: 999;
+              z-index: 99999;
               input {
                 opacity: 0;
                 width: 0;
                 height: 0;
-                z-index: 999;
+                z-index: 99999;
                 &:checked + .fd924-slider {
                   background-color: #d5e9ff;
-                  z-index: 999;
+                  z-index: 99999;
                 }
 
                 &:focus + .fd924-slider {
                   border: 1px solid #3860be;
                   box-shadow: 0 0 1px #3860be;
-                  z-index: 999;
+                  z-index: 99999;
                 }
 
                 &:checked + .fd924-slider:before {
                   background: #3860be;
-                  z-index: 999;
+                  z-index: 99999;
                   -webkit-transform: translateX(26px);
                   -ms-transform: translateX(26px);
                   transform: translateX(26px);
@@ -299,7 +299,7 @@
               background-color: #f2f1f1;
               -webkit-transition: 0.4s;
               transition: 0.4s;
-              z-index: 999;
+              z-index: 99999;
               &::before {
                 position: absolute;
                 content: "";
@@ -310,20 +310,20 @@
                 background-color: #7f7f7f;
                 -webkit-transition: 0.4s;
                 transition: 0.4s;
-                z-index: 999;
+                z-index: 99999;
               }
               &.round {
                 border-radius: 34px;
-                z-index: 999;
+                z-index: 99999;
                 &::before {
                   border-radius: 50%;
-                  z-index: 999;
+                  z-index: 99999;
                 }
               }
             }
             .fd924-purpose-right-box {
               position: absolute;
-              z-index: 9;
+              z-index: 99999;
               right: 10px;
             }
             .fd924-purpose-left-box {
