@@ -8,19 +8,22 @@ var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var less = require('gulp-less');
 var uglify = require('gulp-uglify');
+var rename = require("gulp-rename");
 var minifyCSS = require('gulp-minify-css'); 
 var plumber = require('gulp-plumber');
+const webpack = require('webpack');
+const webpackStream = require('webpack-stream');
+const webpackConfig = require('./webpack.config.js');
+
 var projectStart = false;
 var paths = {
 	src: 'src/**/*',
-  srcHTML: 'src/**/*.html',
-  srcLess: 'src/**/*.less',
-  srcJS: 'src/**/*.js',
+  srcHTML: 'src/html/*.html',
+  srcLess: 'src/css/*.less',
+  srcJS: 'src/js/main.js',
 
 	tmp: 'tmp',
   tmpIndex: 'tmp/index.html',
-  tmpCSS: 'tmp/**/*.css',
-  tmpJS: 'tmp/**/*.js',
 
   dist: 'dist',
   distIndex: 'dist/index.html',
@@ -47,8 +50,7 @@ gulp.task('less', function(){
 gulp.task('js', function () {
   return gulp.src(paths.srcJS)
   .pipe(plumber())
-  .pipe(concat('script.js'))
-  .pipe(babel({ presets: ['@babel/env'] }))
+  .pipe(webpackStream(webpackConfig), webpack)
   .pipe(gulp.dest(paths.tmp));
 });
 
