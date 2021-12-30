@@ -1,14 +1,11 @@
 var gulp = require('gulp');
 var del = require('del');
-const babel = require('gulp-babel');
 var inject = require('gulp-inject');
 var browserSync = require('browser-sync')
 var htmlclean = require('gulp-htmlclean');
-var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var less = require('gulp-less');
 var uglify = require('gulp-uglify');
-var rename = require("gulp-rename");
 var minifyCSS = require('gulp-minify-css'); 
 var plumber = require('gulp-plumber');
 const webpack = require('webpack');
@@ -80,9 +77,14 @@ gulp.task('watch', ['serve'], function () {
 });
 
 gulp.task('default', ['watch']);
+
+
+
 /**
  * DEVELOPMENT END
  */
+
+
 
 
 
@@ -108,7 +110,7 @@ gulp.task('js:dist', function () {
   return gulp.src(paths.srcJS)
     .pipe(plumber())
     .pipe(concat('script.min.js'))
-    .pipe(babel({ presets: ['@babel/env'] }))
+    // .pipe(babel({ presets: ['@babel/env'] }))
     .pipe(uglify())
     .pipe(gulp.dest(paths.dist));
 });
