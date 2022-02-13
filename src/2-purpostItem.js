@@ -75,7 +75,7 @@ class PurpostItem extends HTMLElement {
 		this.querySelector("input").addEventListener('click', (event) => { 
 			this.state.hasAccept = event.target.checked;
 			storeDatafd924.state.purposes[this.state.index].hasAllow = this.state.hasAccept;
-			storeDatafd924.saveState();
+			// storeDatafd924.saveState();
 		 })
 		this.querySelector(".fd924-area-explad").addEventListener('click', this.onToggleExpand.bind(this))
 		document.addEventListener("onEventRejectAll",this.onRejectAll.bind(this));

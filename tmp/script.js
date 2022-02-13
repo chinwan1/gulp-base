@@ -215,13 +215,6 @@ var storeDatafd924 = {
     }
   },
   saveState: function saveState() {
-    // localStorage.setItem(
-    //   "storeDatafd924",
-    //   JSON.stringify({
-    //     purposes: storeDatafd924.state.purposes,
-    //     cookieID: storeDatafd924.state.cookieID,
-    //   })
-    // );
     document.cookie = "storeDatafd924=".concat(JSON.stringify({
       purposes: storeDatafd924.state.purposes,
       cookieID: storeDatafd924.state.cookieID
@@ -487,8 +480,7 @@ var PurpostItem = /*#__PURE__*/function (_HTMLElement2) {
 
       this.querySelector("input").addEventListener('click', function (event) {
         _this3.state.hasAccept = event.target.checked;
-        storeDatafd924.state.purposes[_this3.state.index].hasAllow = _this3.state.hasAccept;
-        storeDatafd924.saveState();
+        storeDatafd924.state.purposes[_this3.state.index].hasAllow = _this3.state.hasAccept; // storeDatafd924.saveState();
       });
       this.querySelector(".fd924-area-explad").addEventListener('click', this.onToggleExpand.bind(this));
       document.addEventListener("onEventRejectAll", this.onRejectAll.bind(this));
@@ -520,7 +512,7 @@ var PurpostBox = /*#__PURE__*/function (_HTMLElement3) {
   }, {
     key: "renderHtml",
     value: function renderHtml() {
-      var ci = storeDatafd924.getCiFooterPrivacyCompany();
+      // const ci = storeDatafd924.getCiFooterPrivacyCompany();
       this.innerHTML =
       /*html*/
       "\n\t\t<div class=\"fd924-purpost-box\">\n\t\t\t<div class=\"fd924-purpose-box-title \">\n\t\t\t\t<p class=\"fd924-text-privacy-text\">".concat(storeDatafd924.state.subtitleModal, "</p>\n\t\t\t</div>\n\t\t\t<div class=\"fd924-purpose-box-list\">\n\t\t\t\t").concat(this.renderContent(), "\n\t\t\t</div>\n\t\t</div>\n\t\t");
@@ -564,7 +556,7 @@ var CookieCosent = /*#__PURE__*/function (_HTMLElement4) {
 
     _defineProperty(_assertThisInitialized(_this4), "state", {
       hasOpen: true,
-      titleModal: ''
+      titleModal: ""
     });
 
     return _this4;
@@ -573,6 +565,17 @@ var CookieCosent = /*#__PURE__*/function (_HTMLElement4) {
   _createClass(CookieCosent, [{
     key: "connectedCallback",
     value: function connectedCallback() {
+      var localStore = storeDatafd924.loadDataFromPersistence();
+
+      if (!localStore.emptyData) {
+        storeDatafd924.state.purposes = localStore.data.purposes;
+      } else {
+        storeDatafd924.state.purposes = storeDatafd924.state.purposes.map(function (item) {
+          item.hasAllow = false;
+          return item;
+        });
+      }
+
       this.renderHtml();
       this.registerEvent();
     }
@@ -582,18 +585,18 @@ var CookieCosent = /*#__PURE__*/function (_HTMLElement4) {
       var ci = storeDatafd924.getCiModalCompany();
       this.innerHTML =
       /*html*/
-      "\n\t\t<div class=\"fd924-cookie-cosent \">\n\t\t\t<div class=\"fd924-model-cookie fd924-modal\">\n\t\t\t\t<div class=\"fd924-model-content \">\n\t\t\t\t\t<div class=\"fd924-model-header\">\n\t\t\t\t\t\t<p class=\"fd924-text-title-header\">".concat(storeDatafd924.state.titleModal, "</p>\n\t\t\t\t\t\t<div class=\"fd924-model-icon-x\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn-close\" aria-label=\"Close\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"fd924-model-body\" >\n\t\t\t\t\t\t<fd924-purpost-box  ></fd924-purpost-box>\n\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fd924-model-footer\">\n\t\t\t\t\t\t\t<div class=\"fd924-footer-btn\">\n\t\t\t\t\t\t\t\t<button class=\"fd924-btn fd924-btn-left\">\n\t\t\t\t\t\t\t\t\t").concat(storeDatafd924.state.btnRejectText || 'Reject All', "\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t<button class=\"fd924-btn fd924-btn-right\">\n\t\t\t\t\t\t\t\t\t").concat(storeDatafd924.state.btnConfireText || 'Confirm My Choices', "\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"fd924-box-powered-by\">\n\t\t\t\t\t\t\t\t<a href=\"https://www.google.co.th/\" >\t\n\t\t\t\t\t\t\t\t\t<span class=\"fd924-powerd-by\">").concat(storeDatafd924.state.labeltextPowerText || 'Powered by', "</span> <span class=\"fd924-powerd-link\">").concat(storeDatafd924.state.powerByText || 'wisework', "<span>\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"fd924-bg-overly fd924-modal-background\"></div>\n\t\t</div>");
+      "\n\t\t<div class=\"fd924-cookie-cosent \">\n\t\t\t<div class=\"fd924-model-cookie fd924-modal\">\n\t\t\t\t<div class=\"fd924-model-content \">\n\t\t\t\t\t<div class=\"fd924-model-header\">\n\t\t\t\t\t\t<p class=\"fd924-text-title-header\">".concat(storeDatafd924.state.titleModal, "</p>\n\t\t\t\t\t\t<div class=\"fd924-model-icon-x\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn-close\" aria-label=\"Close\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"fd924-model-body\" >\n\t\t\t\t\t\t<fd924-purpost-box  ></fd924-purpost-box>\n\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fd924-model-footer\">\n\t\t\t\t\t\t\t<div class=\"fd924-footer-btn\">\n\t\t\t\t\t\t\t\t<button class=\"fd924-btn fd924-btn-left\">\n\t\t\t\t\t\t\t\t\t").concat(storeDatafd924.state.btnRejectText || "Reject All", "\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t<button class=\"fd924-btn fd924-btn-right\">\n\t\t\t\t\t\t\t\t\t").concat(storeDatafd924.state.btnConfireText || "Confirm My Choices", "\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"fd924-box-powered-by\">\n\t\t\t\t\t\t\t\t<a href=\"https://www.google.co.th/\" >\t\n\t\t\t\t\t\t\t\t\t<span class=\"fd924-powerd-by\">").concat(storeDatafd924.state.labeltextPowerText || "Powered by", "</span> <span class=\"fd924-powerd-link\">").concat(storeDatafd924.state.powerByText || "wisework", "<span>\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"fd924-bg-overly fd924-modal-background\"></div>\n\t\t</div>");
       this.querySelector(".fd924-cookie-cosent").classList.add("fd924-anime");
-      this.querySelector('.fd924-text-title-header').style.color = ci.modalTitleColor;
-      this.querySelector('.fd924-text-privacy-text').style.color = ci.modelSubTitleColor;
-      var btnLeft = this.querySelector('.fd924-btn-left');
+      this.querySelector(".fd924-text-title-header").style.color = ci.modalTitleColor;
+      this.querySelector(".fd924-text-privacy-text").style.color = ci.modelSubTitleColor;
+      var btnLeft = this.querySelector(".fd924-btn-left");
       btnLeft.style.color = ci.btnRejectTextColor;
       btnLeft.style.background = ci.btnRejectBgColor;
-      var btnRight = this.querySelector('.fd924-btn-right');
+      var btnRight = this.querySelector(".fd924-btn-right");
       btnRight.style.color = ci.btnConfireTextColor;
       btnRight.style.background = ci.btnConfireBgColor;
-      this.querySelector('.fd924-powerd-by').style.color = ci.labeltextPowerColor;
-      this.querySelector('.fd924-powerd-link').style.color = ci.powerByColor;
+      this.querySelector(".fd924-powerd-by").style.color = ci.labeltextPowerColor;
+      this.querySelector(".fd924-powerd-link").style.color = ci.powerByColor;
     }
   }, {
     key: "onToggleModal",
@@ -623,26 +626,23 @@ var CookieCosent = /*#__PURE__*/function (_HTMLElement4) {
         bubbles: true
       });
       document.dispatchEvent(myEvent);
-      this.setStateSwitch(false);
-      storeDatafd924.saveState();
+      this.setStateSwitch(false); // storeDatafd924.saveState();
     }
   }, {
     key: "onHandeConfirmAll",
     value: function onHandeConfirmAll() {
-      var myEvent = new CustomEvent("onEventConfirmAll", {
-        bubbles: true
-      });
-      document.dispatchEvent(myEvent);
-      this.setStateSwitch(true);
+      // const myEvent = new CustomEvent("onEventConfirmAll", { bubbles: true, });
+      // document.dispatchEvent(myEvent);
+      // this.setStateSwitch(true);
       storeDatafd924.saveState();
     }
   }, {
     key: "registerEvent",
     value: function registerEvent() {
-      this.querySelector(".fd924-model-icon-x").addEventListener('click', this.onToggleModal.bind(this)); // this.querySelector(`.fd924-bg-overly`).addEventListener('click',this.onToggleModal.bind(this));
+      this.querySelector(".fd924-model-icon-x").addEventListener("click", this.onToggleModal.bind(this)); // this.querySelector(`.fd924-bg-overly`).addEventListener('click',this.onToggleModal.bind(this));
 
-      this.querySelector(".fd924-btn-left").addEventListener('click', this.onHandeRejactAll.bind(this));
-      this.querySelector(".fd924-btn-right").addEventListener('click', this.onHandeConfirmAll.bind(this));
+      this.querySelector(".fd924-btn-left").addEventListener("click", this.onHandeRejactAll.bind(this));
+      this.querySelector(".fd924-btn-right").addEventListener("click", this.onHandeConfirmAll.bind(this));
     }
   }]);
 

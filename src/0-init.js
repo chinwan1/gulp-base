@@ -179,13 +179,6 @@ var storeDatafd924 = {
     }
   },
   saveState() {
-    // localStorage.setItem(
-    //   "storeDatafd924",
-    //   JSON.stringify({
-    //     purposes: storeDatafd924.state.purposes,
-    //     cookieID: storeDatafd924.state.cookieID,
-    //   })
-    // );
     document.cookie = `storeDatafd924=${JSON.stringify({
       purposes: storeDatafd924.state.purposes,
       cookieID: storeDatafd924.state.cookieID,

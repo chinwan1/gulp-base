@@ -4,7 +4,7 @@ class PurpostBox extends HTMLElement {
 		this.renderHtml();
 	}
 	renderHtml() {
-		const ci = storeDatafd924.getCiFooterPrivacyCompany();
+		// const ci = storeDatafd924.getCiFooterPrivacyCompany();
 		this.innerHTML = /*html*/`
 		<div class="fd924-purpost-box">
 			<div class="fd924-purpose-box-title ">

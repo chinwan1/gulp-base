@@ -4,7 +4,6 @@ const babel = require('gulp-babel');
 var inject = require('gulp-inject');
 var browserSync = require('browser-sync')
 var htmlclean = require('gulp-htmlclean');
-var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var less = require('gulp-less');
 var uglify = require('gulp-uglify');
