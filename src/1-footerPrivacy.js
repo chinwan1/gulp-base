@@ -70,10 +70,12 @@ class FooterPrivacy extends HTMLElement {
       var expires = "expires=" + d.toUTCString();
       document.cookie = "CONSENT=" + cvalue + ";" + expires + ";path=/";
       document.getElementById("cokiepop").remove();
-
       let element = document.createElement(iconCookieCosent);
 			document.getElementsByTagName('body')[0].append(element)
+      storeDatafd924.state.purposes.map((item) => {  item.hasAllow = true; return item} );
+			storeDatafd924.saveState();
       storeDatafd924.sendEventToPreview({ model: 'OPEN_ICON_COKIE'});
+
     } catch (error) {
       console.log(error);
     }

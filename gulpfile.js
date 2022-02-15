@@ -47,7 +47,7 @@ gulp.task('js', function () {
   return gulp.src(paths.srcJS)
   .pipe(plumber())
   .pipe(concat('script.js'))
-  .pipe(babel({ presets: ['@babel/env'] }))
+  // .pipe(babel({ presets: ['@babel/env'] }))
   .pipe(gulp.dest(paths.tmp));
 });
 
