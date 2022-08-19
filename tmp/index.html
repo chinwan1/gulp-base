@@ -27,9 +27,9 @@
 			script.onload = function () {
 				CSent.inititail({
 					webkit: 'Google',
-					text: 'นโยบายด้านความปลอดภัย The Wise Work <a class="fd924-privacy-link" href="https://www.thewiseworks.com" ">รายละเอียดเพิ่มเติม</a>',
-					titleModal: 'Manage Consent Preferences',
-					subtitleModal: 'นโยบายด้านความปลอดภัย The Wise Work <a class="fd924-privacy-link" href="https://www.thewiseworks.com" ">รายละเอียดเพิ่มเติม</a>',
+					text: 'นโยบายด้านความปลอดภัย The Wise Work <a class="fd954-privacy-link" href="https://www.thewiseworks.com" ">รายละเอียดเพิ่มเติม</a>',
+					titleModal: 'การตั้งค่าความเป็นส่วนตัว',
+					subtitleModal: 'นโยบายด้านความปลอดภัย The Wise Work <a class="fd954-privacy-link" href="https://www.thewiseworks.com" ">รายละเอียดเพิ่มเติม</a>',
           btnPrivacyText: '',
           btnTextOK: '',
           btnRejectText: '',
@@ -37,11 +37,18 @@
           labeltextPowerText: '',
           powerByText: '',
           preview: false,
-					purposes: [
-						{ id: 1,title: 'These sdf sdf sdf sfs v10.24.1 v10.24.1 v10.24.1 v10.24.1d', description: `x`, textMore: '', urlMore: '', hasAllow: false  },
-						{ id: 2,title: 'test2', description: `These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.`, textMore: '', urlMore: '', hasAllow: false },
-						{ id: 3,title: 'test3', description: `These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.`, textMore: '', urlMore: '', hasAllow: false },
+					categories: [
+						{ id: 1,label: 'การตั้งค่าความเป็นส่วนตัว', sequence: 1, focusAllow: true, hasDispalyAllow: true, purposes: [
+							{ content: `related tools are designed to both  existing test cases and to help you related tools are designed to both  existing test cases and to help you related tools are designed to both  existing test cases and to help you related tools are designed to both  existing test cases and to help you related tools are designed to both  existing test cases and to help you to develop new test cases. If you only want to be able to execute existing test cases and report failures to a file, the command line tools are enough. On a development machine where you will be actively maintaining and creating test cases, you will need the full install including development tools including development tools including development tools.
+							`, id: 1, focusAllow: false, hasDispalyAllow: false}
+						] },
+						{ id: 2,label: 'คุกกี้1', sequence: 3, focusAllow: true, hasDispalyAllow: true, purposes: [
+              	{ content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'`, id: 1, focusAllow: true, hasDispalyAllow: true, keepAliveData: '30d'},
+              	{ content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`, id: 2, focusAllow: false, hasDispalyAllow: true, keepAliveData: '30d'},
+              	{ content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`, id: 2, focusAllow: false, hasDispalyAllow: true, keepAliveData: '30d'}
+            ] },
 					],
+
           ciColor: {
               footerPrivacyCompany :{
                 privacyTextLinkColor: '',
@@ -55,7 +62,7 @@
               },
               modalCompany: {
                 modalTitleColor: '',
-                modelSubTitleColor: '',
+                modalSubTitleColor: '',
                 btnRejectTextColor: '',
                 btnRejectBgColor: '',
                 btnConfireTextColor: '',
