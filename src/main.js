@@ -16,6 +16,7 @@ var storeDatafd954 = {
         textPrivary: "",
         preview: false,
         stateFlow: 0,
+        imageLogo: "",
         ciColor: {
             footerPrivacyCompany: {
                 privacyTextLinkColor: "",
@@ -42,8 +43,8 @@ var storeDatafd954 = {
             },
         },
     },
-		hasFocusAllowAll() {
-			return storeDatafd954.state.hasDispalyAllow && storeDatafd954.state.focusAllow;
+		hasFocusAllowAllPurpose(purpose) {
+			return purpose.hasDispalyAllow && purpose.focusAllow;
 		},
     hasStateFlowPurposeExpired() {
       return storeDatafd954.state.stateFlow === storeDatafd954.statesFlow.purposeExpired;
@@ -77,13 +78,14 @@ var storeDatafd954 = {
     sendHistoryToDatabase() {
         let dateNow = new Date();
         let purposeBody = [];
-        let j = 0;
-        for (let i = 0; i < storeDatafd954.state.purposes.length; i++) {
-            if (storeDatafd954.state.purposes[i].hasAllow) {
-                purposeBody[j] = { "ConsentCookiePurposeID": storeDatafd954.state.purposes[i].id, "HasAllow": true }
-                j++;
+        storeDatafd954.state.categories.map((item) => {
+          item.purposes.map((itemp) => {
+            if(itemp.hasAllow) {
+              purposeBody.push({ "ConsentCookiePurposeID": item.id, "HasAllow": true });
             }
-        }
+          })
+        })
+
         let body = {
             "UID": this.generateUID(),
             "IPAddress": `${{ipAddress}}`,
@@ -172,6 +174,7 @@ var storeDatafd954 = {
         storeDatafd954.state.labeltextPowerText = input.labeltextPowerText;
         storeDatafd954.state.consentCookieID = input.consentCookieID;
         storeDatafd954.state.powerByText = input.powerByText;
+        storeDatafd954.state.imageLogo = input.imageLogo;
 				storeDatafd954.state.categories = storeDatafd954.createInitDataCategories(input);
         if (Object.keys(input.ciColor).length) {
           storeDatafd954.state.ciColor = input.ciColor;
@@ -184,13 +187,14 @@ var storeDatafd954 = {
             );
             storeDatafd954.state.categories = newState.categories;
         }
+
     },
 		createInitDataCategories(input) {
 			let resp = [];
 			if(input.categories.length) {
 				let newCategories = input.categories.map((item) => {
 					item.purposes.map(item => {
-						if(storeDatafd954.hasFocusAllowAll()) item.hasAllow = true;
+						if(storeDatafd954.hasFocusAllowAllPurpose(item) || item.hasDispalyAllow) item.hasAllow = true;
 						else item.hasAllow = false;
 					});
 					item.active = false;
@@ -208,17 +212,23 @@ var storeDatafd954 = {
       storeDatafd954.state.stateFlow = 0;
       storeDatafd954.state.hasStateFlowPurposeExpired = [];
     },
-    mappingExternalCookie(collectionPointID, purposes) {
+    mappingExternalCookie(collectionPointID, categories) {
+      let purposes = [];
+      categories.map((category) => {
+        category.purposes.map((item) => {
+          if(item.hasDispalyAllow) {
+            purposes.push({
+              code: item.code,
+              purposeId: item.id,
+              hasAllow: item.hasAllow,
+              expired: item.expired
+            })
+          }
+        });
+      })
       return {
         collectionPointID,
-        purposes: purposes.map((item) => {
-          return {
-            code: item.code,
-            purposeId: item.id,
-            hasAllow: item.hasAllow,
-            expired: item.expired
-          }
-        })
+        purposes,
       }
     },
     processKeepAliveDataToForm:(keepAliveData) => {
@@ -250,7 +260,7 @@ var storeDatafd954 = {
     	  document.cookie = `storeDatafd954-${storeDatafd954.state.consentCookieID}=${JSON.stringify({ purposes: persistentPurposes,
     	  cookieID: storeDatafd954.state.consentCookieID,
     	})}; path=/`;
-      // storeDatafd954.sendHistoryToDatabase();
+      storeDatafd954.sendHistoryToDatabase();
     },
 		flattenPurpose(categories) {
 			let purposes = [];
@@ -316,10 +326,10 @@ var CSent = {
     exportFunction()  {
       var consentCookieID = storeDatafd954.state.consentCookieID;
       var storeData = storeDatafd954.getCookieByName(`storeDatafd954-${consentCookieID}`);
-      if (!storeData) return storeDatafd954.mappingExternalCookie(consentCookieID,storeDatafd954.state.purposes);
+      if (!storeData) return storeDatafd954.mappingExternalCookie(consentCookieID,storeDatafd954.state.categories);
       var item = JSON.parse(storeData);
-      if (!item) return storeDatafd954.mappingExternalCookie(consentCookieID,storeDatafd954.state.purposes);
-      return storeDatafd954.mappingExternalCookie(consentCookieID,item.purposes)
+      if (!item) return storeDatafd954.mappingExternalCookie(consentCookieID,storeDatafd954.state.categories);
+      return storeDatafd954.mappingExternalCookie(consentCookieID,item.categories)
     },
     renderIconCookieConnset() {
         let element = document.createElement(iconCookieConsent);
@@ -337,7 +347,6 @@ var CSent = {
             { tag: cookieConsentContent, value: CookieConsentContent},
             { tag: cookieConsentContentPurpose, value: CookieConsentContentPurpose },
             { tag: cookieConsentNavigation, value: CookieConsentNavigation },
-
             { tag: cookieConsentNavigationItem, value: CookieConsentNavigationItem },
             { tag: iconCookieConsent, value: IconCookieConsent },
         ];
@@ -435,7 +444,15 @@ class FooterPrivacy extends HTMLElement {
             }
             let element = document.createElement(iconCookieConsent);
             document.getElementsByTagName('body')[0].append(element)
-            storeDatafd954.state.purposes.map((item) => { item.hasAllow = true; return item });
+            storeDatafd954.state.categories = storeDatafd954.state.categories.map((item) => {
+              item.purposes = item.purposes.map((itemp) => {
+                if(storeDatafd954.hasFocusAllowAllPurpose(itemp)) {
+                  itemp.hasAllow = true;
+                }
+                return itemp;
+              })
+              return item;
+            })
             storeDatafd954.saveState();
             const myEvent = new CustomEvent("onCookieConsentEvent", {
               bubbles: true,
@@ -572,7 +589,6 @@ class CookieConsentContent extends HTMLElement {
 		renderPurpose(category) {
 			return category.purposes.reduce((store, next) => {
 				let purpostStore = { 
-					headerLabel: category.label,
 					 categoryID: category.id,
 					 focusAllow: next.focusAllow,
 					 hasAllow: next.hasAllow,
@@ -604,7 +620,7 @@ class CookieConsentContentPurpose extends HTMLElement {
               ${this.renderHtmlRequire()}
 					</div>
 					<div>
-						${this.state.content}
+						${this.state.description}
 					</div>
 				</div>
 		`
@@ -616,7 +632,8 @@ class CookieConsentContentPurpose extends HTMLElement {
 			this.state = JSON.parse(this.getAttribute('data-purpose'));
 			let categoryIndex = storeDatafd954.state.categories.findIndex(category => category.id === this.state.categoryID);
 			let purposeIndex = storeDatafd954.state.categories[categoryIndex].purposes.findIndex(purpose => purpose.id === this.state.id);
-			this.state.content = storeDatafd954.state.categories[categoryIndex].purposes[purposeIndex].content
+			this.state.description = storeDatafd954.state.categories[categoryIndex].purposes[purposeIndex].description;
+      this.state.headerLabel =  storeDatafd954.state.categories[categoryIndex].purposes[purposeIndex].title;
     }
 
 
@@ -632,6 +649,15 @@ class CookieConsentContentPurpose extends HTMLElement {
 					let categoryIndex = storeDatafd954.state.categories.findIndex(category => category.id === this.state.categoryID);
 					let purposeIndex = storeDatafd954.state.categories[categoryIndex].purposes.findIndex(purpose => purpose.id === this.state.id);
 					storeDatafd954.state.categories[categoryIndex].purposes[purposeIndex].hasAllow = event.target.checked;
+
+          let domStatus = this.querySelector(".fd954-switch-status");
+          if(event.target.checked) {
+            domStatus.textContent = "เปิดใช้งาน"
+            domStatus.classList.add("active");
+          } else {
+            domStatus.textContent = "ปิดใช้งาน"
+            domStatus.classList.remove("active");
+          }
 				})
 			}
     }
@@ -640,8 +666,9 @@ class CookieConsentContentPurpose extends HTMLElement {
 		}
     renderHtmlRequire() {
 		if(!this.state.hasDispalyAllow) return "";
-    if(this.state.hasDispalyAllow && this.state.focusAllow) return `<div class="box-header-right">เปิดใช้งานตลอดเวลา</div>`;
+    if(this.state.hasDispalyAllow && this.state.focusAllow) return `<div class="box-header-right"><span>เปิดใช้งานตลอดเวลา</span></div>`;
 		return `<div class="box-header-right">
+        <div class="fd954-switch-status ${this.state.hasAllow ? "active": ""}">${ this.state.hasAllow ? "เปิดใช้งาน": "ปิดใช้งาน"}</div>
         <label class="fd954-switch">
           <input type="checkbox"  ${ this.state.hasAllow ? "checked" : ""} >
           <span class="fd954-slider round"></span>
@@ -661,15 +688,6 @@ class CookieConsent extends HTMLElement {
         titleModal: "",
     };
     connectedCallback() {
-        var localStore = storeDatafd954.loadDataFromPersistence();
-        if (!localStore.emptyData) {
-            // storeDatafd954.state.purposes = localStore.data.purposes;
-        } else {
-            // storeDatafd954.state.purposes = storeDatafd954.state.purposes.ip((item) => {
-            //     item.hasAllow = false;
-            //     return item;
-            // })
-        }
         this.renderHtml();
         this.registerEvent();
     }
@@ -684,7 +702,7 @@ class CookieConsent extends HTMLElement {
           <div class="fd954-modal-header">
               <div class="fd954-box-left fd954-align-center fd954-center">
                 <div class="fd954-modal-header-logo">
-                  1ddd
+                  <img src="${storeDatafd954.state.imageLogo}">
                 </div>
               </div>
               <div class="fd954-box-right">
@@ -843,10 +861,10 @@ class IconCookieConsent extends HTMLElement {
     }
 
     registerEvent() {
-        // this.querySelector(`.fd954-icon-cookie`).addEventListener('click', (e) => {
-            // e.preventDefault()
+        this.querySelector(`.fd954-icon-cookie`).addEventListener('click', (e) => {
+            e.preventDefault()
             let element = document.createElement(cookieConsent);
             document.getElementsByTagName('body')[0].append(element)
-        // });
+        });
     }
 }
