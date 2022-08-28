@@ -105,7 +105,7 @@ gulp.task('js:dist', function () {
   return gulp.src(paths.srcJS)
     .pipe(plumber())
     .pipe(concat('script.min.js'))
-    .pipe(babel({ presets: ['@babel/env'] }))
+    // .pipe(babel({ presets: ['@babel/env'] }))
     .pipe(uglify())
     .pipe(gulp.dest(paths.dist));
 });

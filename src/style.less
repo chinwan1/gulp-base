@@ -308,6 +308,20 @@
 					overflow-x: hidden;
 					max-height: 280px;
 					font-size: 12px;
+					&::-webkit-scrollbar-thumb {
+							border: 5px solid transparent;
+							border-radius: 100px;
+							background-color: #7f7f7f;
+							background-clip: content-box
+					}
+					&::-webkit-scrollbar {
+    				width: 20px
+					}
+					&::-webkit-scrollbar-track {
+    				border-radius: 100px
+					}
+
+
 					.fd954-cookie-consent-content-purpose{
 						.fd954-consent-content-box-header{
 							display: flex;
@@ -438,6 +452,7 @@
 				font-weight: 700;
 				font-size: 14px;
 				cursor: pointer;
+				margin-right: 16px;
 			}
 			.fd954-footer-btnconfirm {
 				border: #000;
@@ -511,6 +526,9 @@
 				top: auto;
 				left: auto;
 				margin: auto;
+				.fd954-setting{
+					margin-right: 0px;
+				}
 				div {
 					padding-bottom: 10px;
 				}
