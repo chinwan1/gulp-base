@@ -549,6 +549,7 @@ class CookieConsentNavigationItem extends HTMLElement {
 
     registerEvent() {
 			this.addEventListener("click", () => {
+				if(this.querySelector(`#navigation-item-${this.state.index}`).classList.contains("active")) { return ; }
 				document.dispatchEvent(new CustomEvent("myEventNavigation", { bubbles: true, detail: this.state }))
 				document.dispatchEvent(new CustomEvent("myEventContent", { bubbles: true, detail: {
 					categoryID: this.state.index
@@ -581,6 +582,7 @@ class CookieConsentContent extends HTMLElement {
 
     registerEvent() {
 			document.addEventListener("myEventContent", env => {
+				console.log("Ddd")
 				let info = env.detail;
 				let category = storeDatafd954.state.categories.find(item => item.id === info.categoryID);
 				document.querySelector("#content-raw-html").innerHTML = this.renderPurpose(category);
