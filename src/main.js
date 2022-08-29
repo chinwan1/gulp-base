@@ -181,23 +181,24 @@ var storeDatafd954 = {
         }
         var localStore = storeDatafd954.loadDataFromPersistence();
         if (!localStore.emptyData) {
-            var newState = storeDatafd954.mappingPersistentToData(
-								localStore.data.purposes,
-                storeDatafd954.state.categories
+          var newState = storeDatafd954.mappingPersistentToData(
+            localStore.data.purposes,
+            storeDatafd954.state.categories
             );
             storeDatafd954.state.categories = newState.categories;
-        }
-
+          }
+          
     },
 		createInitDataCategories(input) {
 			let resp = [];
 			if(input.categories.length) {
 				let newCategories = input.categories.map((item) => {
-					item.purposes.map(item => {
-						if(storeDatafd954.hasFocusAllowAllPurpose(item) || item.hasDispalyAllow) item.hasAllow = true;
+					item.purpose = item.purposes.map(item => {
+						if(storeDatafd954.hasFocusAllowAllPurpose(item)) item.hasAllow = true;
 						else item.hasAllow = false;
 					});
 					item.active = false;
+
 					return item;
 				});
 				newCategories[0].active = true;
@@ -582,7 +583,6 @@ class CookieConsentContent extends HTMLElement {
 
     registerEvent() {
 			document.addEventListener("myEventContent", env => {
-				console.log("Ddd")
 				let info = env.detail;
 				let category = storeDatafd954.state.categories.find(item => item.id === info.categoryID);
 				document.querySelector("#content-raw-html").innerHTML = this.renderPurpose(category);
