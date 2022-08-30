@@ -81,7 +81,7 @@ var storeDatafd954 = {
         storeDatafd954.state.categories.map((item) => {
           item.purposes.map((itemp) => {
             if(itemp.hasAllow) {
-              purposeBody.push({ "ConsentCookiePurposeID": item.id, "HasAllow": true });
+              purposeBody.push({ "ConsentCookiePurposeID": itemp.id, "HasAllow": true });
             }
           })
         })
@@ -447,7 +447,7 @@ class FooterPrivacy extends HTMLElement {
             document.getElementsByTagName('body')[0].append(element)
             storeDatafd954.state.categories = storeDatafd954.state.categories.map((item) => {
               item.purposes = item.purposes.map((itemp) => {
-                if(storeDatafd954.hasFocusAllowAllPurpose(itemp)) {
+                if(item.hasDispalyAllow) {
                   itemp.hasAllow = true;
                 }
                 return itemp;

@@ -1,3 +1,4 @@
+		window.onload = (event) => {
 var css = document.createElement("link");
 css.rel = "stylesheet";
 css.href =
@@ -61,59 +62,41 @@ script.onload = function () {
         ],
       },
       {
-        id: 2,
+        id: 55,
         label: "คุกกี้ที่มีความจำเป็น",
         focusAllow: true,
         hasDispalyAllow: true,
         purposes: [
           {
-            id: 1,
+            id: 90,
             focusAllow: true,
             hasDispalyAllow: true,
             title: "คุกกี้ประสิทธิภาพ",
+            code: `PAN-001`,
             description:
               `<style>
                 table, td, th {
                   border: 1px solid;
                 }
-
-                table {
-                  width: 100%;
-                  border-collapse: collapse;
+                td{
+                  vertical-align: baseline;
                 }
-              </style>
-              คุกกี้เหล่านี้จำเป็นสำหรับการทำงานของเว็บไซต์ และไม่สามารถปิดการใช้งานในระบบของเราได้ และโดยปกติแล้ว คุกกี้เหล่านี้จะถูกกำหนดไว้เพื่อตอบสนองต่อการดำเนินการร้องขอบริการของคุณ เช่น การตั้งค่าความเป็นส่วนตัว การเข้าสู่ระบบ หรือการกรอกแบบฟอร์ม เว็บไซต์จะไม่สามารถทำงานอย่างถูกต้องได้เลยหากไม่มีการเก็บรวบรวมคุกกี้เหล่านี้
-              <table>
-                <tr>
-                  <th>กลุ่มย่อยของคุกกี้</th>
-                  <th>ชื่อ</th>
-                  <th>คุกกี้ที่ใช้</th>
-                </tr>
-                <tr>
-                  <td>Domain</td>
-                  <td>ชื่อคุกกี้</td>
-                  <td>ฝ่ายแรก หรือ ฝ่ายสาม</td>
-                </tr>
-              </table>
-              `,
-          },
-        ],
-      },
-      {
-        id: 3,
-        label: "คุกกี้ประสิทธิภาพ",
-        focusAllow: false,
-        hasDispalyAllow: false,
-        purposes: [
-          {
-            id: 1,
-            title: "คุกกี้ประสิทธิภาพ",
-            focusAllow: false,
-            hasDispalyAllow: true,
-            description:
-              `<style>
-                table, td, th {
-                  border: 1px solid;
+                .td-col-2{
+                  white-space: normal;
+                  overflow: auto;
+                  max-width: 36px;
+                }
+                ::-webkit-scrollbar-thumb {
+                    border: 5px solid transparent;
+                    border-radius: 100px;
+                    background-color: #7f7f7f;
+                    background-clip: content-box
+                }
+                ::-webkit-scrollbar {
+                  width: 20px
+                }
+                ::-webkit-scrollbar-track {
+                  border-radius: 100px
                 }
 
                 table {
@@ -122,30 +105,52 @@ script.onload = function () {
                 }
               </style>
               คุกกี้ประเภทนี้ทำให้เราสามารถนับจำนวนผู้เข้าชมเว็บไซต์ และแหล่งที่มาของผู้เข้าชมเหล่านั้น ทำให้เข้าใจว่าผู้เข้าชม/ผู้ใช้มีการปฏิสัมพันธ์กับเว็บไซต์อย่างไรบ้าง และหน้าเว็บใดที่ได้รับความนิยมมากที่สุดหรือน้อยที่สุด โดยการเก็บรวบรวมข้อมูลโดยไม่ระบุตัวตนของท่านอย่างไม่เฉพาะเจาะจงแก่เราช่วยให้เรา สามารถพัฒนาและมอบประสบการณ์การใช้งานเว็บไซต์ที่ดีกว่าแก่ท่าน หากท่านไม่อนุญาตให้ใช้คุกกี้ประเภทนี้ เราจะไม่อาจทราบได้ว่าท่านเคยมาเข้าชมเว็บไซต์ของเราเมื่อใด และไม่สามารถติดตามประสิทธิภาพการประมวลผลของหน้าเว็บได้
-              <table>
+              <table style="margin-top:20px;">
                 <tr>
                   <th>กลุ่มย่อยของคุกกี้</th>
-                  <th>ชื่อ</th>
+                  <th>คุกกี้</th>
                   <th>คุกกี้ที่ใช้</th>
                 </tr>
                 <tr>
-                  <td>Domain</td>
-                  <td>ชื่อคุกกี้</td>
-                  <td>ฝ่ายแรก หรือ ฝ่ายสาม</td>
+                  <td>pankansociety.com</td>
+                  <td class="td-col-2">_ga</td>
+                  <td>First-party</td>
                 </tr>
-              </table>`,
+                <tr>
+                  <td>pankansociety.com</td>
+                  <td  class="td-col-2" >_gid</td>
+                  <td>First-party</td>
+                </tr>
+                <tr>
+                  <td>pankansociety.com</td>
+                  <td  class="td-col-2" >_gat_UA-116687057-2</td>
+                  <td>First-party</td>
+                </tr>
+                <tr>
+                  <td>pankansociety.com</td>
+                  <td  class="td-col-2" >_gat_UA-116687057-2</td>
+                  <td>First-party</td>
+                </tr>
+                <tr>
+                  <td>pankansociety.com</td>
+                  <td  class="td-col-2" >_gat_%5Bobject%20Object%5D</td>
+                  <td>First-party</td>
+                </tr>
+              </table>
+              `,
           },
         ],
       },
       {
-        id: 4,
-        label: "คุกกี้ที่ช่วยเหลือในการทำงาน",
+        id: 55,
+        label: "คุกกี้เพื่อกำหนดเป้าหมาย",
         focusAllow: false,
         hasDispalyAllow: false,
         purposes: [
           {
-            id: 1,
-            title: "คุกกี้ที่ช่วยเหลือในการทำงาน",
+            id: 91,
+            title: "คุกกี้เพื่อกำหนดเป้าหมาย",
+            code: 'PAN-002',
             focusAllow: false,
             hasDispalyAllow: true,
             keepAliveData: '30d',
@@ -154,44 +159,25 @@ script.onload = function () {
                 table, td, th {
                   border: 1px solid;
                 }
-
-                table {
-                  width: 100%;
-                  border-collapse: collapse;
+                td{
+                  vertical-align: baseline;
                 }
-              </style>
-              คุกกี้ประเภทนี้จะช่วยจดจำข้อมูลคอมพิวเตอร์หรืออุปกรณ์อิเล็กทรอนิกส์ที่ท่านใช้เข้าชมเว็บไซต์ ข้อมูลการลงทะเบียนหรือ log in ข้อมูลการตั้งค่าหรือตัวเลือกที่ท่านเคยเลือกไว้บนเว็บไซต์ เช่น ภาษาที่แสดงบนเว็บไซต์ ที่อยู่สำหรับจัดส่งสินค้า เพื่อให้ท่านสามารถใช้งานเว็บไซต์ได้สะดวกยิ่งขึ้น โดยไม่ต้องให้ข้อมูลหรือตั้งค่าใหม่ทุกครั้งที่ท่านเข้าใช้เว็บไซต์ ทั้งนี้ หากท่านไม่ยินยอมให้เราใช้คุกกี้ประเภทนี้ ท่านอาจใช้งานเว็บไซต์ได้ไม่สะดวกและไม่เต็มประสิทธิภาพ
-              <table>
-                <tr>
-                  <th>กลุ่มย่อยของคุกกี้</th>
-                  <th>ชื่อ</th>
-                  <th>คุกกี้ที่ใช้</th>
-                </tr>
-                <tr>
-                  <td>Domain</td>
-                  <td>ชื่อคุกกี้</td>
-                  <td>ฝ่ายแรก หรือ ฝ่ายสาม</td>
-                </tr>
-              </table>`,
-          },
-        ],
-      },
-      {
-        id: 5,
-        label: "คุกกี้เพื่อกำหนดเป้าหมาย",
-        focusAllow: false,
-        hasDispalyAllow: false,
-        purposes: [
-          {
-            id: 1,
-            title: "",
-            focusAllow: false,
-            hasDispalyAllow: true,
-            keepAliveData: '30d',
-            description:
-                 `<style>
-                table, td, th {
-                  border: 1px solid;
+                ::-webkit-scrollbar-thumb {
+                    border: 5px solid transparent;
+                    border-radius: 100px;
+                    background-color: #7f7f7f;
+                    background-clip: content-box
+                }
+                ::-webkit-scrollbar {
+                  width: 20px
+                }
+                ::-webkit-scrollbar-track {
+                  border-radius: 100px
+                }
+                .td-col-2{
+                  white-space: normal;
+                  overflow: auto;
+                  max-width: 36px;
                 }
 
                 table {
@@ -200,18 +186,44 @@ script.onload = function () {
                 }
               </style>
               คุกกี้ประเภทนี้จะเก็บข้อมูลต่าง ๆ ซึ่งอาจรวมถึงข้อมูลส่วนบุคคลของท่านและสร้างโปรไฟล์เกี่ยวกับตัวท่าน เพื่อให้เราสามารถวิเคราะห์และนำเสนอเนื้อหา สินค้า/บริการ และ/หรือ โฆษณาที่เหมาะสมกับความสนใจของท่านได้ ทั้งนี้ หากท่านไม่ยินยอมให้เราใช้คุกกี้ประเภทนี้ ท่านอาจได้รับข้อมูลและโฆษณาทั่วไปที่ไม่ตรงกับความสนใจของท่าน
-              <table>
+              <table style="margin-top:20px;">
                 <tr>
                   <th>กลุ่มย่อยของคุกกี้</th>
-                  <th>ชื่อ</th>
+                  <th>คุกกี้</th>
                   <th>คุกกี้ที่ใช้</th>
                 </tr>
                 <tr>
-                  <td>Domain</td>
-                  <td>ชื่อคุกกี้</td>
-                  <td>ฝ่ายแรก หรือ ฝ่ายสาม</td>
+                  <td>pankansociety.com</td>
+                  <td class="td-col-2">_fbp</td>
+                  <td>First-party</td>
                 </tr>
-              </table>`,
+                <tr>
+                  <td>pankansociety.com</td>
+                  <td  class="td-col-2" >_gcl_au</td>
+                  <td>First-party</td>
+                </tr>
+                <tr>
+                <td>doubleclick.net </td>
+                  <td  class="td-col-2" >IDE</td>
+                  <td>Third-party</td>
+                </tr>
+                <tr>
+                  <td>doubleclick.net </td>
+                  <td  class="td-col-2" >test_cookie</td>
+                  <td>Third-party</td>
+                </tr>
+                <tr>
+                  <td>youtube.com </td>
+                  <td  class="td-col-2" >YSC</td>
+                  <td>Third-party</td>
+                </tr>
+                <tr>
+                  <td>youtube.com </td>
+                  <td  class="td-col-2" >YSC</td>
+                  <td>Third-party</td>
+                </tr>
+              </table>
+              `,
           },
         ],
       },
@@ -246,3 +258,4 @@ script.onload = function () {
 script.src =
   "https://pdpa.thewiseworks.com/api/CMSCookieConsent/GetScriptCookieConsent?template=theme1";
 document.getElementsByTagName("head")[0].appendChild(script);
+    }
