@@ -65,7 +65,8 @@ gulp.task('inject', ['copy'], function () {
 gulp.task('serve',['inject'] ,function(){
 	if(!projectStart) {
 		browserSync({
-				server: { baseDir: paths.tmp, },
+				server: { baseDir: "-",   routes: { '/en': paths.tmp, "/th": paths.tmp,  "/": paths.tmp }},
+        startPath: '/en',
 				notify:false
 		})
 		projectStart = true;

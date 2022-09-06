@@ -5,6 +5,8 @@ var storeDatafd954 = {
     state: {
         languages: {},
         defaultLanguage: "EN",
+        language: "EN",
+        autoDetectLanguage: true,
         consentCookieID: 0 ,
 				categories: [],
         referenceId: "",
@@ -160,10 +162,9 @@ var storeDatafd954 = {
         storeDatafd954.state.referenceId = input.referenceId;
         storeDatafd954.state.consentCookieID = input.consentCookieID;
         storeDatafd954.state.imageLogo = input.imageLogo;
+        storeDatafd954.state.language = storeDatafd954.detectLanguage();
 				storeDatafd954.state.categories = storeDatafd954.createInitDataCategories(input);
-        if (Object.keys(input.ciColor).length) {
-          storeDatafd954.state.ciColor = input.ciColor;
-        }
+        if (Object.keys(input.ciColor).length) { storeDatafd954.state.ciColor = input.ciColor; }
         var localStore = storeDatafd954.loadDataFromPersistence();
         if (!localStore.emptyData) {
           var newState = storeDatafd954.mappingPersistentToData(
@@ -174,13 +175,21 @@ var storeDatafd954 = {
           }
           
     },
+    detectLanguage() {
+      let url = window.location.href.toUpperCase();
+      let foundEn = url.match(new RegExp('/EN/'));
+      let foundTH = url.match(new RegExp('/TH/'));
+      if(foundEn) return "EN";
+      if(foundTH) return "TH"
+      return  storeDatafd954.state.defaultLanguage;
+    },
     getTranslate(key, input) {
       if(!Object.keys(storeDatafd954.state.languages)) return "";
       if(input) {
         if(!Object.keys(input.languages)) return "";
-        return input.languages[storeDatafd954.state.defaultLanguage.toUpperCase()][key] || "";
+        return input.languages[storeDatafd954.state.language.toUpperCase()][key] || "";
       }
-      return storeDatafd954.state.languages[storeDatafd954.state.defaultLanguage.toUpperCase()][key];
+      return storeDatafd954.state.languages[storeDatafd954.state.language.toUpperCase()][key];
     },
 		createInitDataCategories(input) {
 			let resp = [];
@@ -643,8 +652,8 @@ class CookieConsentContentPurpose extends HTMLElement {
 			this.state = JSON.parse(this.getAttribute('data-purpose'));
 			let categoryIndex = storeDatafd954.state.categories.findIndex(category => category.id === this.state.categoryID);
 			let purposeIndex = storeDatafd954.state.categories[categoryIndex].purposes.findIndex(purpose => purpose.id === this.state.id);
-			this.state.description = storeDatafd954.state.categories[categoryIndex].purposes[purposeIndex].description;
-      this.state.headerLabel =  storeDatafd954.state.categories[categoryIndex].purposes[purposeIndex].title;
+			this.state.description = storeDatafd954.getTranslate("description",storeDatafd954.state.categories[categoryIndex].purposes[purposeIndex]);
+      this.state.headerLabel = storeDatafd954.getTranslate("title",storeDatafd954.state.categories[categoryIndex].purposes[purposeIndex]);
     }
 
 
@@ -679,7 +688,7 @@ class CookieConsentContentPurpose extends HTMLElement {
 		if(!this.state.hasDispalyAllow) return "";
     if(this.state.hasDispalyAllow && this.state.focusAllow) return `<div class="box-header-right"><span>${ storeDatafd954.getTranslate("labelForceAllow")}</span></div>`;
 		return `<div class="box-header-right">
-        <div class="fd954-switch-status ${this.state.hasAllow ? "active": ""}">${ this.state.hasAllow ?  storeDatafd954.getTranslate("labelSwithLeft") || "": storeDatafd954.getTranslate("labelSwithRight") || "ปิดใช้งาน" }</div>
+        <div class="fd954-switch-status ${this.state.hasAllow ? "active": ""}">${ this.state.hasAllow ?  storeDatafd954.getTranslate("labelSwithLeft") || "": storeDatafd954.getTranslate("labelSwithRight") || "" }</div>
         <label class="fd954-switch">
           <input type="checkbox"  ${ this.state.hasAllow ? "checked" : ""} >
           <span class="fd954-slider round"></span>
