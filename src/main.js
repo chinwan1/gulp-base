@@ -317,6 +317,7 @@ var CSent = {
             if(storeDatafd954.hasStateFlowPurposeExpired()) {
               let element = document.createElement(cookieConsent);
               document.getElementsByTagName('body')[0].append(element)
+							document.querySelector('body').style.overflow = 'hidden';
             }
             CSent.renderIconCookieConnset();
         } else {
@@ -433,6 +434,7 @@ class FooterPrivacy extends HTMLElement {
         e.preventDefault()
         let element = document.createElement(cookieConsent);
         document.getElementsByTagName('body')[0].append(element)
+				document.querySelector('body').style.overflow = 'hidden';
     }
     onAccept() {
       try {
@@ -538,7 +540,7 @@ class CookieConsentNavigationItem extends HTMLElement {
         let category = storeDatafd954.state.categories.find(item => item.id === this.state.index );
         this.innerHTML = /*html*/`
           <li class="fd954-cookie-consent-navigation-item ${this.getAttribute("data-active") === "true" ? "active":  ""}" id="navigation-item-${this.state.index}">
-           <div class="fd954-li-box"></div> <span class="navigation-item-label">${storeDatafd954.getTranslate("label",category)}<span>
+           <div class="fd954-li-box"></div> <span class="navigation-item-label fd954-custom-navigation-item-label">${storeDatafd954.getTranslate("label",category)}<span>
           </li>
 		    `
     }
@@ -589,7 +591,7 @@ class CookieConsentContent extends HTMLElement {
     }
     renderHtml() {
 				let category = storeDatafd954.state.categories.find((item) => { return item.active === true });
-        this.innerHTML = /*html*/` <div class="fd954-cookie-consent-content" id="content-raw-html"> </div>`
+        this.innerHTML = /*html*/` <div class="fd954-cookie-consent-content fd954-custom-cookie-consent-content" id="content-raw-html"> </div>`
 				document.querySelector("#content-raw-html").innerHTML = this.renderPurpose(category);
     }
 
@@ -635,7 +637,7 @@ class CookieConsentContentPurpose extends HTMLElement {
 				<div class="fd954-cookie-consent-content-purpose">
 					<div class="fd954-consent-content-box-header">
 						<div class="box-header-left">
-							<span id="content-header-label">${this.state.headerLabel}<span>
+							<span id="content-header-label" class="fd954-custom-content-header-label">${this.state.headerLabel}<span>
 						</div>
               ${this.renderHtmlRequire()}
 					</div>
@@ -714,6 +716,20 @@ class CookieConsent extends HTMLElement {
     renderHtml() {
         var ci = storeDatafd954.getCiModalCompany();
         this.innerHTML = /*html*/ `
+		<style>
+			.fd954-custom-cookie-consent-content{
+				font-size: 20px !important;
+			}
+			.fd954-custom-content-header-label{
+				background: red;
+			}
+			.fd954-custom-navigation-item-label{
+				background: red;
+			}
+			.fd954-custom-text-title-header{
+				background: red;
+			}
+		</style>
 		<div class="fd954-cookie-consent">
 			<div class="fd954-modal-cookie fd954-modal">
 				<div class="fd954-modal-content">
@@ -726,7 +742,7 @@ class CookieConsent extends HTMLElement {
               </div>
               <div class="fd954-box-right">
                 <div class="fd954-modal-header-content">
-                  <div class="fd954-text-title-header">${storeDatafd954.getTranslate("labelTitleModal")} <span style="color:red" id="box-expired"></span></div>
+                  <div class="fd954-text-title-header fd954-custom-text-title-header">${storeDatafd954.getTranslate("labelTitleModal")} <span style="color:red" id="box-expired"></span></div>
                   <div class="fd954-modal-icon-x">
                     <div type="button" class="fd954-modal-btn-close" aria-label="Close"></div>
                   </div>
@@ -782,6 +798,7 @@ class CookieConsent extends HTMLElement {
               storeDatafd954.saveState();
             }
             this.querySelector(`.fd954-cookie-consent`).classList.add("fd954-out");
+						document.querySelector("body").style.overflow = "auto";
             setTimeout(() => {
                 this.remove();
             }, 500);
@@ -834,6 +851,7 @@ class CookieConsent extends HTMLElement {
 				this.querySelector('.fd954-box-above-model-footer-btn-left').addEventListener("click", () => {
 					storeDatafd954.saveState();
           this.querySelector(`.fd954-cookie-consent`).classList.add("fd954-out");
+					document.querySelector("body").style.overflow = "auto";
             if(!document.querySelector(iconCookieConsent)) {
               let elementCookie = document.getElementById("cookiepop");
               if(elementCookie) { elementCookie.remove(); }
@@ -882,6 +900,7 @@ class IconCookieConsent extends HTMLElement {
             e.preventDefault()
             let element = document.createElement(cookieConsent);
             document.getElementsByTagName('body')[0].append(element)
+						document.querySelector('body').style.overflow = 'hidden';
         });
 
 
@@ -897,6 +916,7 @@ class IconCookieConsent extends HTMLElement {
             e.preventDefault()
             let element = document.createElement(cookieConsent);
             document.getElementsByTagName('body')[0].append(element)
+						document.querySelector('body').style.overflow = 'hidden';
         });
     }
 }
