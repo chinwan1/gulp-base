@@ -180,7 +180,7 @@ script.onload = function () {
                 td{
                   vertical-align: baseline;
                 }
-     		   .td-col-1{
+     		        .td-col-1{
                   white-space: normal;
                   overflow: auto;
                   width: 117px;
