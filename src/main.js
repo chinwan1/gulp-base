@@ -9,9 +9,11 @@ var storeDatafd954 = {
         autoDetectLanguage: true,
         consentCookieID: 0 ,
 				categories: [],
+        purposesExpired: [],
         referenceId: "",
         stateFlow: 0,
         imageLogo: "",
+        customStyle: "",
         ciColor: {
             footerPrivacyCompany: {
                 privacyTextLinkColor: "",
@@ -125,10 +127,24 @@ var storeDatafd954 = {
         if (!storeData) return { emptyData: true };
         var item = JSON.parse(storeData);
         if (!item) return { emptyData: true };
+        item = storeDatafd954.stampPurposeExpired(item);
         return {
             emptyData: false,
             data: item,
         };
+    },
+    stampPurposeExpired(item) {
+      let currentDate = new Date();
+      let purposes = item.purposes;
+      item.purposes = purposes.map((purpose) => {
+        if(new Date(purpose.expired) < currentDate && purpose.hasAllow) {
+          storeDatafd954.changeStateFlowToStateFlowExpired();
+          purpose.hasAllow = false;
+          storeDatafd954.state.purposesExpired.push(purpose);
+        }
+        return purpose;
+      })
+      return item;
     },
     mapperStateAllow(oldState, newState) {
       return newState.map((nitem) => {
@@ -148,6 +164,30 @@ var storeDatafd954 = {
             categories,
         };
     },
+    mappingPurposesCatagory(purposes) {
+      const uniqueCategories = new Set()
+      purposes.map(purpose => uniqueCategories.add(purpose.categoryID));
+      let cate = [...uniqueCategories].map((categoryID) => {
+         return storeDatafd954.state.categories.find(item  => item.id === categoryID)
+      }).map((category) => {
+        category.purposes = purposes.filter((purpose) =>{ 
+          return purpose.categoryID === category.id;
+        }).map((purpose) => {
+            let purposeContent;
+            let found = storeDatafd954.state.categories.find((category) => {
+              let found = category.purposes.find(purpose => purpose.id)
+              if(found  &&  purpose.categoryID  === category.id) {
+                purposeContent = found;
+                return found;
+              }
+            })
+            if(found) return purposeContent;
+            return false;
+        });
+        return category;
+      })
+      return cate;
+    },
     hasPurposeExpired(purposes) {
       let currentDate = new Date();
       let result = purposes.find((item) => {
@@ -162,6 +202,7 @@ var storeDatafd954 = {
         storeDatafd954.state.referenceId = input.referenceId;
         storeDatafd954.state.consentCookieID = input.consentCookieID;
         storeDatafd954.state.imageLogo = input.imageLogo;
+        storeDatafd954.state.customStyle = input.customStyle;
         storeDatafd954.state.language = storeDatafd954.detectLanguage();
 				storeDatafd954.state.categories = storeDatafd954.createInitDataCategories(input);
         if (Object.keys(input.ciColor).length) { storeDatafd954.state.ciColor = input.ciColor; }
@@ -189,15 +230,16 @@ var storeDatafd954 = {
         if(!Object.keys(input.languages)) return "";
         return input.languages[storeDatafd954.state.language.toUpperCase()][key] || "";
       }
-      return storeDatafd954.state.languages[storeDatafd954.state.language.toUpperCase()][key];
+      return storeDatafd954.state.languages[storeDatafd954.state.language.toUpperCase()][key] || "";
     },
 		createInitDataCategories(input) {
 			let resp = [];
 			if(input.categories.length) {
 				let newCategories = input.categories.map((item) => {
-					item.purpose = item.purposes.map(item => {
+					item.purposes = item.purposes.map(item => {
 						if(storeDatafd954.hasFocusAllowAllPurpose(item)) item.hasAllow = true;
 						else item.hasAllow = false;
+            return item;
 					});
 					item.active = false;
 
@@ -215,7 +257,7 @@ var storeDatafd954 = {
       storeDatafd954.state.stateFlow = 0;
       storeDatafd954.state.hasStateFlowPurposeExpired = [];
     },
-    mappingExternalCookie(collectionPointID, categories) {
+    mappingExternalCookie(collectionPointID) {
       let purposes = [];
 
       storeDatafd954.state.categories.map((category) => {
@@ -255,19 +297,20 @@ var storeDatafd954 = {
       return result.toLocaleString("sv");
     },
     saveState() {
+      let purposes = storeDatafd954.flattenPurpose(storeDatafd954.state.categories);
       if(this.hasStateFlowPurposeExpired()) {
-        storeDatafd954.state.purposes = this.mappingPurposesExpired();
+        purposes =this.mappingPurposesExpired(purposes);
         storeDatafd954.changeStateFlowExpiredToStateFlowNormal();
       }
-			let purposes = storeDatafd954.flattenPurpose(storeDatafd954.state.categories);
 			let persistentPurposes = storeDatafd954.mappingDataToPersistent(purposes);
-    	  document.cookie = `storeDatafd954-${storeDatafd954.state.consentCookieID}=${JSON.stringify({ purposes: persistentPurposes,
+      document.cookie = `storeDatafd954-${storeDatafd954.state.consentCookieID}=${JSON.stringify({ purposes: persistentPurposes,
     	  cookieID: storeDatafd954.state.consentCookieID,
     	})}; path=/`;
-      storeDatafd954.sendHistoryToDatabase();
+      // storeDatafd954.sendHistoryToDatabase();
     },
 		flattenPurpose(categories) {
 			let purposes = [];
+      categories = categories.filter(category => category.hasDispalyAllow);
 			categories.map((category) => {
 				let newItem = category.purposes.map((item) =>{ 
 					item.categoryID = category.id
@@ -295,15 +338,15 @@ var storeDatafd954 = {
         };
 			})
 		},
-    mappingPurposesExpired() {
-      return storeDatafd954.state.purposes.map((item) => {
-        let codeItem = item.code;
-        let fitem = storeDatafd954.state.purposesExpired.find((pe) => {
-          return pe.code === codeItem
+    mappingPurposesExpired(purposes) {
+      return storeDatafd954.state.purposesExpired.map((item) => {
+        let newPurposes= purposes.find((purpose) => {
+          return purpose.id === item.id && item.categoryID === purpose.categoryID;
         })
-        if(fitem) item.hasAllow = fitem.hasAllow;
-        return item;
-      })
+        newPurposes.expired = item.expired;
+        newPurposes.hasAllow = item.hasAllow;
+        return newPurposes;
+      });
     },
 
 };
@@ -498,7 +541,12 @@ class CookieConsentNavigation extends HTMLElement {
 			document.addEventListener("myEventNavigation",this.handleOnClickMenu.bind(this))
 		}
 		renderNavigationItem() {
-			return storeDatafd954.state.categories.reduce((store, next) => {
+      let renderNav = storeDatafd954.state.categories;
+      if(storeDatafd954.hasStateFlowPurposeExpired()) {
+        let navExpired = storeDatafd954.mappingPurposesCatagory(storeDatafd954.state.purposesExpired);
+        renderNav = [storeDatafd954.state.categories[0],...navExpired];
+    }
+			return renderNav.reduce((store, next) => {
 				return store += `<fd954-cookie-consent-navigation-item  data-index=${next.id} data-active=${next.active}>
 				</fd954-cookie-consent-navigation-item>`;
 			}, "");
@@ -714,21 +762,10 @@ class CookieConsent extends HTMLElement {
     }
 
     renderHtml() {
-        var ci = storeDatafd954.getCiModalCompany();
-        this.innerHTML = /*html*/ `
+      var ci = storeDatafd954.getCiModalCompany();
+      this.innerHTML = /*html*/ `
 		<style>
-			.fd954-custom-cookie-consent-content{
-				font-size: 20px !important;
-			}
-			.fd954-custom-content-header-label{
-				background: red;
-			}
-			.fd954-custom-navigation-item-label{
-				background: red;
-			}
-			.fd954-custom-text-title-header{
-				background: red;
-			}
+      ${storeDatafd954.state.customStyle}
 		</style>
 		<div class="fd954-cookie-consent">
 			<div class="fd954-modal-cookie fd954-modal">
@@ -784,9 +821,6 @@ class CookieConsent extends HTMLElement {
         this.querySelector(`.fd954-cookie-consent`).classList.add("fd954-anime");
         this.querySelector(".fd954-text-title-header").style.color =
             `${ci.modalTitleColor}`;
-        if(storeDatafd954.hasStateFlowPurposeExpired()) {
-          this.querySelector("#box-expired").innerHTML = "(Expired)";
-        }
         this.querySelector(".fd954-powerd-by").style.color = `${ci.labeltextPowerColor}`;
         this.querySelector(".fd954-powerd-link").style.color = `${ci.powerByColor}`;
     }

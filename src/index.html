@@ -48,6 +48,19 @@
     imageLogo: "https://isosuitestorage.blob.core.windows.net/isosuite/pankansociety.png",
     defaultLanguage: "EN",
     enableDetectLanguage: true,
+    customStyle: `
+      .fd954-custom-cookie-consent-content{
+				font-size: 20px !important;
+			}
+			.fd954-custom-content-header-label{
+				background: red;
+			}
+			.fd954-custom-navigation-item-label{
+				background: red;
+			}
+			.fd954-custom-text-title-header{
+				background: red;
+			}`,
     categories: [
       {
         id: 1,
@@ -189,6 +202,99 @@
           },
         ],
       },
+      {
+        id: 551,
+        languages: {
+          TH: { label: ""},
+          EN: { label: `Strictly ` },
+        },
+        focusAllow: true,
+        hasDispalyAllow: true,
+        purposes: [
+          {
+            id: 901,
+            focusAllow: true,
+            hasDispalyAllow: true,
+            title: "Strictly ",
+            keepAliveData: '30d',
+            code: `PAN-001`,
+            languages: {
+              TH: { label: ""},
+              EN: { label: `Strictly `,
+                description: `<style>
+                table, td, th {
+                  border: 1px solid;
+                }
+                td{
+                  vertical-align: baseline;
+                }
+               .td-col-1{
+                  white-space: normal;
+                  overflow: auto;
+                  width: 117px;
+                }
+                .td-col-2{
+                  white-space: normal;
+                  overflow: auto;
+                  max-width: 94px;
+                }
+                ::-webkit-scrollbar-thumb {
+                    border: 5px solid transparent;
+                    border-radius: 100px;
+                    background-color: #7f7f7f;
+                    background-clip: content-box
+                }
+                ::-webkit-scrollbar {
+                  width: 20px
+                }
+                ::-webkit-scrollbar-track {
+                  border-radius: 100px
+                }
+
+                table {
+                  width: 100%;
+                  border-collapse: collapse;
+                }
+              </style>
+              คุกกี้ประเภทนี้ทำให้เราสามารถนับจำนวนผู้เข้าชมเว็บไซต์ และแหล่งที่มาของผู้เข้าชมเหล่านั้น ทำให้เข้าใจว่าผู้เข้าชม/ผู้ใช้มีการปฏิสัมพันธ์กับเว็บไซต์อย่างไรบ้าง และหน้าเว็บใดที่ได้รับความนิยมมากที่สุดหรือน้อยที่สุด โดยการเก็บรวบรวมข้อมูลโดยไม่ระบุตัวตนของท่านอย่างไม่เฉพาะเจาะจงแก่เราช่วยให้เรา สามารถพัฒนาและมอบประสบการณ์การใช้งานเว็บไซต์ที่ดีกว่าแก่ท่าน หากท่านไม่อนุญาตให้ใช้คุกกี้ประเภทนี้ เราจะไม่อาจทราบได้ว่าท่านเคยมาเข้าชมเว็บไซต์ของเราเมื่อใด และไม่สามารถติดตามประสิทธิภาพการประมวลผลของหน้าเว็บได้
+              <table style="margin-top:20px;">
+                <tr>
+                  <th>กลุ่มย่อยของคุกกี้</th>
+                  <th>คุกกี้</th>
+                  <th>คุกกี้ที่ใช้</th>
+                </tr>
+                <tr>
+                  <td class="td-col-1">pankansociety.com</td>
+                  <td class="td-col-2">_ga</td>
+                  <td>First-party</td>
+                </tr>
+                <tr>
+                  <td class="td-col-1">pankansociety.com</td>
+                  <td  class="td-col-2" >_gid</td>
+                  <td>First-party</td>
+                </tr>
+                <tr>
+                  <td class="td-col-1">pankansociety.com</td>
+                  <td  class="td-col-2" >_gat_UA-116687057-2</td>
+                  <td>First-party</td>
+                </tr>
+                <tr>
+                  <td class="td-col-1">pankansociety.com</td>
+                  <td  class="td-col-2" >_gat_UA-116687057-2</td>
+                  <td>First-party</td>
+                </tr>
+                <tr>
+                  <td class="td-col-1">pankansociety.com</td>
+                  <td  class="td-col-2" >_gat_%5Bobject%20Object%5D</td>
+                  <td>First-party</td>
+                </tr>
+              </table>
+              `, },
+            }
+          },
+        ],
+      },
+
     ],
     ciColor: {
       footerPrivacyCompany: {
