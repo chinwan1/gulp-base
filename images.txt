@@ -13,3 +13,10 @@ goodsociety | https://isosuitestorage.blob.core.windows.net/isosuite/Lg2EhokZkE.
 foodforgood |https://isosuitestorage.blob.core.windows.net/isosuite/2RxjjbHWfs.png
 makatho |https://isosuitestorage.blob.core.windows.net/isosuite/ylpTCAkOW5.png
 dscword| https://isosuitestorage.blob.core.windows.net/isosuite/BjPdPH1DaZ.png
+
+limitededucation |https://isosuitestorage.blob.core.windows.net/isosuite/eKU2CSkpwK.png
+
+
+premier-technology | https://isosuitestorage.blob.core.windows.net/isosuite/3237540036.png
+premier-marketing | https://isosuitestorage.blob.core.windows.net/isosuite/8871092122.png
+pe.premier| https://isosuitestorage.blob.core.windows.net/isosuite/7063081214.png

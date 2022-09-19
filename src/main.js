@@ -6,7 +6,7 @@ var storeDatafd954 = {
         languages: {},
         defaultLanguage: "EN",
         language: "EN",
-        autoDetectLanguage: true,
+        enableDetectLanguage: true,
         consentCookieID: 0 ,
 				categories: [],
         purposesExpired: [],
@@ -14,28 +14,27 @@ var storeDatafd954 = {
         stateFlow: 0,
         imageLogo: "",
         customStyle: "",
+        detectMode: "",
         ciColor: {
             footerPrivacyCompany: {
                 privacyTextLinkColor: "",
                 privacyTextColor: "",
                 privacySettingColor: "",
                 bgBtnOkTextColor: "",
-                LabelBtnTextOKBgColor: "",
+                labelBtnTextOKBgColor: "",
             },
             iconCookie: {
                 bgColor: "",
             },
             modalCompany: {
-                modalTitleColor: "",
-                modalSubTitleColor: "",
-                btnRejectTextColor: "",
-                btnRejectBgColor: "",
-                btnRejectText: "",
-                btnConfireBgColor: "",
-                purposeTextColor: "",
-                purposeDetailText: "",
-                labeltextPowerColor: "",
-                powerByColor: "",
+              modalTitleColor: "",
+              modalSubTitleColor: "",
+              btnRejectTextColor: '',
+              btnRejectBgColor: '',
+              purposeTextColor: "",
+              purposeDetailText: "",
+              labeltextPowerColor: "",
+              powerByColor: "",
             },
         },
     },
@@ -203,7 +202,10 @@ var storeDatafd954 = {
         storeDatafd954.state.consentCookieID = input.consentCookieID;
         storeDatafd954.state.imageLogo = input.imageLogo;
         storeDatafd954.state.customStyle = input.customStyle;
-        storeDatafd954.state.language = storeDatafd954.detectLanguage();
+        storeDatafd954.state.languageIsoCodes = input.languageIsoCodes;
+        storeDatafd954.state.enableDetectLanguage = input.enableDetectLanguage;
+        storeDatafd954.state.detectMode = input.detectMode || "";
+        storeDatafd954.state.language = storeDatafd954.state.enableDetectLanguage ? storeDatafd954.detectLanguage() : "EN";
 				storeDatafd954.state.categories = storeDatafd954.createInitDataCategories(input);
         if (Object.keys(input.ciColor).length) { storeDatafd954.state.ciColor = input.ciColor; }
         var localStore = storeDatafd954.loadDataFromPersistence();
@@ -218,10 +220,17 @@ var storeDatafd954 = {
     },
     detectLanguage() {
       let url = window.location.href.toUpperCase();
-      let foundEn = url.match(new RegExp('/EN/'));
-      let foundTH = url.match(new RegExp('/TH/'));
-      if(foundEn) return "EN";
-      if(foundTH) return "TH"
+      let languageIsoCode = "";
+        languageIsoCode = storeDatafd954.state.languageIsoCodes.find((languageIsoCode) => {
+          if(storeDatafd954.state.detectMode === "TAGHTML")  {
+            return document.documentElement.lang.toUpperCase() === languageIsoCode.toUpperCase();
+          } else {
+            return url.match(new RegExp(`(/${languageIsoCode}/|=${languageIsoCode})`));
+          }
+        })
+
+      
+      if(languageIsoCode) return languageIsoCode;
       return  storeDatafd954.state.defaultLanguage;
     },
     getTranslate(key, input) {
@@ -311,6 +320,7 @@ var storeDatafd954 = {
 		flattenPurpose(categories) {
 			let purposes = [];
       categories = categories.filter(category => category.hasDispalyAllow);
+      console.log(categories);
 			categories.map((category) => {
 				let newItem = category.purposes.map((item) =>{ 
 					item.categoryID = category.id
@@ -327,7 +337,7 @@ var storeDatafd954 = {
 					if(item.hasAllow) { expired = storeDatafd954.calculateDate(amount,unit); }
 					else {expired = "0000-00-00 00:00:00"};
 				} else {
-					expired = ""
+          expired = ""
 				}
         return {
           id: item.id,
@@ -464,8 +474,8 @@ class FooterPrivacy extends HTMLElement {
 
         var btnPrivacy = this.querySelector('.fd954-footer-btnconfirm')
         var textPrivacy = this.querySelector('.fd954-text-ok')
-        textPrivacy.style.color = `${ci.bgBtnOkTextColor}`;
-        btnPrivacy.style.background = `${ci.labelBtnTextOKBgColor}`;
+        textPrivacy.style.color = `${ci.labelBtnTextOKBgColor}`;
+        btnPrivacy.style.background = `${ci.bgBtnOkTextColor}`;
 
     }
 
@@ -722,10 +732,10 @@ class CookieConsentContentPurpose extends HTMLElement {
 
           let domStatus = this.querySelector(".fd954-switch-status");
           if(event.target.checked) {
-            domStatus.textContent = storeDatafd954.state.labelSwithLeft || "" ;
+            domStatus.textContent =  storeDatafd954.getTranslate("labelSwithLeft") || "" ;
             domStatus.classList.add("active");
           } else {
-            domStatus.textContent = storeDatafd954.state.labelSwithRight || ""
+            domStatus.textContent =  storeDatafd954.getTranslate("labelSwithRight") || ""
             domStatus.classList.remove("active");
           }
 				})
@@ -763,6 +773,7 @@ class CookieConsent extends HTMLElement {
 
     renderHtml() {
       var ci = storeDatafd954.getCiModalCompany();
+      var ciPrivacy = storeDatafd954.getCiFooterPrivacyCompany();
       this.innerHTML = /*html*/ `
 		<style>
       ${storeDatafd954.state.customStyle}
@@ -796,10 +807,9 @@ class CookieConsent extends HTMLElement {
               <fd954-cookie-consent-content></fd954-cookie-consent-content>
             </div>
 					</div>
-          <div class="fd954-box-above-modal-footer">
-            <div class="fd954-box-above-model-footer-btn-left">${ storeDatafd954.getTranslate("labelBtnModelAccecpt")}</div>
+          <div class="fd954-box-above-modal-footer" >
+            <div class="fd954-box-above-model-footer-btn-left" style="color:${ciPrivacy.labelBtnTextOKBgColor};background:${ciPrivacy.bgBtnOkTextColor}">${ storeDatafd954.getTranslate("labelBtnModelAccecpt")}</div>
           </div>
-
           
           <div class="fd954-modal-footer">
 							<div class="fd954-box-powered-by">
@@ -821,6 +831,7 @@ class CookieConsent extends HTMLElement {
         this.querySelector(`.fd954-cookie-consent`).classList.add("fd954-anime");
         this.querySelector(".fd954-text-title-header").style.color =
             `${ci.modalTitleColor}`;
+            
         this.querySelector(".fd954-powerd-by").style.color = `${ci.labeltextPowerColor}`;
         this.querySelector(".fd954-powerd-link").style.color = `${ci.powerByColor}`;
     }
@@ -883,6 +894,12 @@ class CookieConsent extends HTMLElement {
         );
 
 				this.querySelector('.fd954-box-above-model-footer-btn-left').addEventListener("click", () => {
+          var d = new Date();
+          var exdays = 365;
+          var cvalue = window.navigator.language + "  " + window.navigator.platform;
+          d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+          var expires = "expires=" + d.toUTCString();
+          document.cookie = `CONSENT-${storeDatafd954.state.consentCookieID}=` + cvalue + ";" + expires + ";path=/";
 					storeDatafd954.saveState();
           this.querySelector(`.fd954-cookie-consent`).classList.add("fd954-out");
 					document.querySelector("body").style.overflow = "auto";
